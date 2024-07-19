@@ -1,6 +1,26 @@
 # V7 Product Interview Task
 
-Thank you for taking the time to do this task! This repo contains a very basic reproduction of the Go table view.
+Thank you for taking the time to do this task! This repo contains a very basic reproduction of the Go table view and an empty page for the entity view.
+
+- The styling is intentionally simple, and should not be used as an indication of how
+  we expect you to style your submission.
+- Feel free to use any styling solution; Tailwind, SASS, vanilla CSS - or anything else that you feel will showcase your ability to create a delightful UI!
+- Given the time constraints, we don't expect there to be tests.
+- We built this app with Vue, but you won't be judged on your mastery of Vue - we understand that you might not have
+
+## What we expect
+
+- A dismissable command center that is triggered with CMD+K/CTRL+K
+  - The commands should trigger UI updates
+- Integration with Go through the API
+- HTML that follows the web standard
+- Well-styled UI components
+
+We expect you to take 2-4 hours completing this task. The potential scope is
+extremely large, but you should focus on the features you feel would be the
+most impactful. We value polished features over breadth of scope.
+
+If you have any questions, then please email your contact within our talent team.
 
 ## Recommended IDE Setup
 
