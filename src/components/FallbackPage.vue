@@ -16,9 +16,7 @@ const port = window.location.port;
         href="https://go.v7labs.com/"
         target="_blank"
         rel="noopener noreferrer"
-      >
-        Go
-      </a>
+      >Go</a>
       and replace the hostname with
       <span class="monospace">{{ `${hostname}:${port}` }}</span>
     </p>
