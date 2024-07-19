@@ -2,36 +2,49 @@
 import { ref, watch } from 'vue'
 import { getEntities } from '@/backend/getEntities'
 import { getProject } from '@/backend/getProject'
+import { useAuthTokenStore } from '@/stores/authToken'
 import { useEntitiesStore } from '@/stores/entities'
 import { useProjectStore } from '@/stores/project'
-import { useStorage } from '@vueuse/core'
 import ProjectTableHeaderCell from '@/components/ProjectTableHeaderCell.vue'
 import ProjectTableCell from '@/components/ProjectTableCell.vue'
+import {useProjectChannel} from '@/composables/useProjectChannel'
+
 const props = defineProps<{
   workspaceId: string
   projectId: string
 }>()
 
-const authToken = useStorage('authToken', '')
+const authTokenStore = useAuthTokenStore()
 const entityStore = useEntitiesStore()
 const projectStore = useProjectStore()
 
-watch(authToken, async (newTokenValue) => {
+useProjectChannel(props.projectId)
+
+watch(() => authTokenStore.token, async (newTokenValue) => {
   if (!newTokenValue) {
     throw new Error('Auth token is required')
   }
 
-  projectStore.project = await getProject({
-    authToken: newTokenValue,
-    projectId: props.projectId,
-    workspaceId: props.workspaceId
-  })
+  try {
+    projectStore.project = await getProject({
+      authToken: newTokenValue,
+      projectId: props.projectId,
+      workspaceId: props.workspaceId
+    })
 
-  entityStore.entities = await getEntities({
-    authToken: newTokenValue,
-    projectId: props.projectId,
-    workspaceId: props.workspaceId
-  })
+    entityStore.entities = await getEntities({
+      authToken: newTokenValue,
+      projectId: props.projectId,
+      workspaceId: props.workspaceId
+    })
+
+    authTokenStore.isValid = true
+  } catch (error) {
+    // probably an invalid token
+    authTokenStore.isValid = false
+    entityStore.entities = []
+    projectStore.project = null
+  }
 
 }, {
   immediate: true
@@ -39,10 +52,10 @@ watch(authToken, async (newTokenValue) => {
 </script>
 
 <template>
-  <div>
+  <div class="container">
     <div class="auth-token-config">
       <div>Log onto Go and paste your auth token here for the page to work:</div>
-      <input aria-label="Auth token" type="text" v-model="authToken" />
+      <input aria-label="Auth token" type="text" v-model="authTokenStore.token" />
     </div>
 
     <table class="grid" role="grid" v-if="projectStore.project"
@@ -56,7 +69,18 @@ watch(authToken, async (newTokenValue) => {
       </thead>
       <tbody>
         <tr v-for="entity, entityIndex in entityStore.entities" :key="entity.id">
-          <td tabindex="0">{{ entityIndex + 1 }}</td>
+          <td tabindex="0">
+            <RouterLink :to="{
+              name: 'entity',
+              params: {
+                workspaceId: props.workspaceId,
+                projectId: props.projectId,
+                entityId: entity.id
+              }
+            }">
+              {{ entityIndex + 1 }}
+            </RouterLink>
+          </td>
           <ProjectTableCell v-for="property, propertyIndex in projectStore.project.properties" 
             :key="property.id"
             :field="entity.fields[property.slug]" 
@@ -70,6 +94,14 @@ watch(authToken, async (newTokenValue) => {
 </template>
 
 <style scoped>
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  min-height: 100vh;
+  padding: 0.5rem;
+}
+
 .auth-token-config {
   display: flex;
   align-items: center;
@@ -81,19 +113,15 @@ table {
   border-collapse: collapse;
 }
 
+td, th {
+  border: 1px solid grey;
+}
+
 td {
   position: relative;
 }
 
-td>div {}
-
-:focus {}
-
-td:focus>* {
-  overflow: auto;
-  max-width: 100%;
-  position: absolute;
-  background-color: white;
-  outline: 2px solid red;
+td:focus, th:focus {
+  outline: 2px solid deepskyblue;
 }
 </style>

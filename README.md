@@ -1,6 +1,6 @@
-# V7 Product Interview Task
+# V7 Product Interview Task
 
-This template should help get you started developing with Vue 3 in Vite.
+Thank you for taking the time to do this task! This repo contains a very basic reproduction of the Go table view.
 
 ## Recommended IDE Setup
 
