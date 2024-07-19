@@ -57,13 +57,13 @@ watch(() => authTokenStore.token, async (newTokenValue) => {
   <div class="container">
 		<AuthHandler />
 
-    <table v-for="i in 100" class="grid" role="grid" v-if="projectStore.project"
+    <table class="grid" role="grid" v-if="projectStore.project"
       :style="{ gridTemplateColumns: `repeat(${projectStore.project.properties.length}, 1fr)` }">
       <thead>
         <th />
         <ProjectTableHeaderCell v-for="property, index in projectStore.project.properties"
           :key="property.id"
-          :property-name="property.name"
+          :property="property"
           :column-index="index" />
       </thead>
       <tbody>
