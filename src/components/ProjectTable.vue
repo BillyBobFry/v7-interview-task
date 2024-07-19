@@ -8,6 +8,7 @@ import { useAuthTokenStore } from '@/stores/authToken'
 import { useEntitiesStore } from '@/stores/entities'
 import { useProjectStore } from '@/stores/project'
 import { watch } from 'vue'
+import AuthHandler from './AuthHandler.vue'
 
 const props = defineProps<{
   workspaceId: string
@@ -53,10 +54,7 @@ watch(() => authTokenStore.token, async (newTokenValue) => {
 
 <template>
   <div class="container">
-    <div class="auth-token-config">
-      <div>Log onto Go and paste your auth token here for the page to work:</div>
-      <input aria-label="Auth token" type="text" v-model="authTokenStore.token" />
-    </div>
+		<AuthHandler />
 
     <table class="grid" role="grid" v-if="projectStore.project"
       :style="{ gridTemplateColumns: `repeat(${projectStore.project.properties.length}, 1fr)` }">
