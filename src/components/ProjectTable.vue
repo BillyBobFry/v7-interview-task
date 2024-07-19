@@ -1,13 +1,13 @@
 <script setup lang="ts">
-import { ref, watch } from 'vue'
 import { getEntities } from '@/backend/getEntities'
 import { getProject } from '@/backend/getProject'
+import ProjectTableCell from '@/components/ProjectTableCell.vue'
+import ProjectTableHeaderCell from '@/components/ProjectTableHeaderCell.vue'
+import { useProjectChannel } from '@/composables/useProjectChannel'
 import { useAuthTokenStore } from '@/stores/authToken'
 import { useEntitiesStore } from '@/stores/entities'
 import { useProjectStore } from '@/stores/project'
-import ProjectTableHeaderCell from '@/components/ProjectTableHeaderCell.vue'
-import ProjectTableCell from '@/components/ProjectTableCell.vue'
-import {useProjectChannel} from '@/composables/useProjectChannel'
+import { watch } from 'vue'
 
 const props = defineProps<{
   workspaceId: string
@@ -62,9 +62,9 @@ watch(() => authTokenStore.token, async (newTokenValue) => {
       :style="{ gridTemplateColumns: `repeat(${projectStore.project.properties.length}, 1fr)` }">
       <thead>
         <th />
-        <ProjectTableHeaderCell v-for="property, index in projectStore.project.properties" 
+        <ProjectTableHeaderCell v-for="property, index in projectStore.project.properties"
           :key="property.id"
-          :property-name="property.name" 
+          :property-name="property.name"
           :column-index="index" />
       </thead>
       <tbody>
@@ -81,10 +81,10 @@ watch(() => authTokenStore.token, async (newTokenValue) => {
               {{ entityIndex + 1 }}
             </RouterLink>
           </td>
-          <ProjectTableCell v-for="property, propertyIndex in projectStore.project.properties" 
+          <ProjectTableCell v-for="property, propertyIndex in projectStore.project.properties"
             :key="property.id"
-            :field="entity.fields[property.slug]" 
-            :entity-index="entityIndex" 
+            :field="entity.fields[property.slug]"
+            :entity-index="entityIndex"
             :property-index="propertyIndex" />
         </tr>
       </tbody>
