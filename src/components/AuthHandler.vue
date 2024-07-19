@@ -20,7 +20,7 @@ const dialogEl = ref<HTMLDialogElement | null>(null);
 
   <dialog ref="dialogEl">
     <label>
-      Log onto Go and paste your auth token here for the page to work:
+      Log onto Go (Staging) and paste your auth token here for the page to work:
       <br />
       <br />
       <input

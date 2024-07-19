@@ -39,6 +39,7 @@ watch(() => authTokenStore.token, async (newTokenValue) => {
       workspaceId: props.workspaceId
     })
 
+		console.log("yay")
     authTokenStore.isValid = true
   } catch (error) {
     // probably an invalid token
@@ -56,7 +57,7 @@ watch(() => authTokenStore.token, async (newTokenValue) => {
   <div class="container">
 		<AuthHandler />
 
-    <table class="grid" role="grid" v-if="projectStore.project"
+    <table v-for="i in 100" class="grid" role="grid" v-if="projectStore.project"
       :style="{ gridTemplateColumns: `repeat(${projectStore.project.properties.length}, 1fr)` }">
       <thead>
         <th />
@@ -96,7 +97,7 @@ watch(() => authTokenStore.token, async (newTokenValue) => {
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  min-height: 100vh;
+	height: 100%;
   padding: 0.5rem;
 }
 
@@ -107,16 +108,20 @@ watch(() => authTokenStore.token, async (newTokenValue) => {
 }
 
 table {
-  min-width: 100vw;
+  min-width: 100%;
   border-collapse: collapse;
 }
 
 td, th {
+	text-align: left;
   border: 1px solid grey;
 }
 
 td {
   position: relative;
+	vertical-align: top;
+	padding: 0.5rem;
+
 }
 
 td:focus, th:focus {
