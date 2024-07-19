@@ -3,10 +3,11 @@ import type { Channel } from 'phoenix'
 import { ref, watch } from 'vue'
 import { Socket } from 'phoenix'
 import { useAuthTokenStore } from '@/stores/authToken'
+import { API_BASE_URL } from '@/backend/constants'
 
 
 const getEndpoint = () => {
-  const { hostname, protocol, port } = new URL("https://go.staging.v7labs.com")
+  const { hostname, protocol, port } = new URL(API_BASE_URL.replace('/api', ''))
   const wsProtocol = protocol === 'https:' ? 'wss:' : 'ws:'
   const wsPort = getPort(port, protocol)
   return `${wsProtocol}//${hostname}:${wsPort}/socket`
