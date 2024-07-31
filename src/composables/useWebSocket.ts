@@ -54,7 +54,6 @@ export const useWebSocket = createSharedComposable(() => {
    * the socket should be disconnected and reconnected.
    */
   const connect = async () => {
-    console.log('connecting with ', tokenStore.token)
     if (socket.value) {
       return
     }
