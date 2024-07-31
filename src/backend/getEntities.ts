@@ -16,7 +16,11 @@ export const getEntities = async (
     }
   })
 
+	if (!res.ok) {
+		throw new Error('Failed to fetch entities')
+	}
+
   const entityResponse = await res.json()
   return entityResponse.data as Entity[]
 }
-  
+

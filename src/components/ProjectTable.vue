@@ -1,13 +1,14 @@
 <script setup lang="ts">
-import { ref, watch } from 'vue'
 import { getEntities } from '@/backend/getEntities'
 import { getProject } from '@/backend/getProject'
+import ProjectTableCell from '@/components/ProjectTableCell.vue'
+import ProjectTableHeaderCell from '@/components/ProjectTableHeaderCell.vue'
+import { useProjectChannel } from '@/composables/useProjectChannel'
 import { useAuthTokenStore } from '@/stores/authToken'
 import { useEntitiesStore } from '@/stores/entities'
 import { useProjectStore } from '@/stores/project'
-import ProjectTableHeaderCell from '@/components/ProjectTableHeaderCell.vue'
-import ProjectTableCell from '@/components/ProjectTableCell.vue'
-import {useProjectChannel} from '@/composables/useProjectChannel'
+import { watch } from 'vue'
+import AuthHandler from './AuthHandler.vue'
 
 const props = defineProps<{
   workspaceId: string
@@ -38,6 +39,7 @@ watch(() => authTokenStore.token, async (newTokenValue) => {
       workspaceId: props.workspaceId
     })
 
+		console.log("yay")
     authTokenStore.isValid = true
   } catch (error) {
     // probably an invalid token
@@ -53,18 +55,15 @@ watch(() => authTokenStore.token, async (newTokenValue) => {
 
 <template>
   <div class="container">
-    <div class="auth-token-config">
-      <div>Log onto Go and paste your auth token here for the page to work:</div>
-      <input aria-label="Auth token" type="text" v-model="authTokenStore.token" />
-    </div>
+		<AuthHandler />
 
     <table class="grid" role="grid" v-if="projectStore.project"
       :style="{ gridTemplateColumns: `repeat(${projectStore.project.properties.length}, 1fr)` }">
       <thead>
         <th />
-        <ProjectTableHeaderCell v-for="property, index in projectStore.project.properties" 
+        <ProjectTableHeaderCell v-for="property, index in projectStore.project.properties"
           :key="property.id"
-          :property-name="property.name" 
+          :property="property"
           :column-index="index" />
       </thead>
       <tbody>
@@ -81,10 +80,10 @@ watch(() => authTokenStore.token, async (newTokenValue) => {
               {{ entityIndex + 1 }}
             </RouterLink>
           </td>
-          <ProjectTableCell v-for="property, propertyIndex in projectStore.project.properties" 
+          <ProjectTableCell v-for="property, propertyIndex in projectStore.project.properties"
             :key="property.id"
-            :field="entity.fields[property.slug]" 
-            :entity-index="entityIndex" 
+            :field="entity.fields[property.slug]"
+            :entity-index="entityIndex"
             :property-index="propertyIndex" />
         </tr>
       </tbody>
@@ -98,7 +97,7 @@ watch(() => authTokenStore.token, async (newTokenValue) => {
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  min-height: 100vh;
+	height: 100%;
   padding: 0.5rem;
 }
 
@@ -109,16 +108,20 @@ watch(() => authTokenStore.token, async (newTokenValue) => {
 }
 
 table {
-  min-width: 100vw;
+  min-width: 100%;
   border-collapse: collapse;
 }
 
 td, th {
+	text-align: left;
   border: 1px solid grey;
 }
 
 td {
   position: relative;
+	vertical-align: top;
+	padding: 0.5rem;
+
 }
 
 td:focus, th:focus {

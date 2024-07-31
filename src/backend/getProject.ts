@@ -15,7 +15,11 @@ export const getProject = async (
     }
   })
 
+	if (!res.ok) {
+		throw new Error('Failed to fetch project')
+	}
+
   const projectResponse = await res.json()
   return projectResponse as Project
 }
-  
+
