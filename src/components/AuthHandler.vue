@@ -1,33 +1,25 @@
 <script setup lang="ts">
-import { useAuthTokenStore } from "@/stores/authToken";
+import { useApiKeyStore } from "@/stores/apiKey";
 import { ref } from "vue";
 
-const authTokenStore = useAuthTokenStore();
+const apiKeyStore = useApiKeyStore();
 const dialogEl = ref<HTMLDialogElement | null>(null);
 </script>
 
 <template>
   <label>
-    {{
-      authTokenStore.isValid
-        ? "Auth token is valid"
-        : "Please add an auth token"
-    }}
+    {{ apiKeyStore.isValid ? "API key is valid" : "Please add an API key" }}
     <button @click="dialogEl?.showModal()">
-      {{ authTokenStore.isValid ? "Modify" : "Add" }} auth token
+      {{ apiKeyStore.isValid ? "Modify" : "Add" }} API key
     </button>
   </label>
 
   <dialog ref="dialogEl">
     <label>
-      Log onto Go (Staging) and paste your auth token here for the page to work:
+      Log onto Go (Staging) and paste your API key here for the page to work:
       <br />
       <br />
-      <input
-        aria-label="Auth token"
-        type="text"
-        v-model="authTokenStore.token"
-      />
+      <input aria-label="API key" type="text" v-model="apiKeyStore.token" />
     </label>
     <button @click="dialogEl?.close()">Close dialog</button>
   </dialog>

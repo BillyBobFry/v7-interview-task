@@ -4,7 +4,7 @@ import { getProject } from '@/backend/getProject'
 import ProjectTableCell from '@/components/ProjectTableCell.vue'
 import ProjectTableHeaderCell from '@/components/ProjectTableHeaderCell.vue'
 import { useProjectChannel } from '@/composables/useProjectChannel'
-import { useAuthTokenStore } from '@/stores/authToken'
+import { useApiKeyStore } from '@/stores/apiKey'
 import { useEntitiesStore } from '@/stores/entities'
 import { useProjectStore } from '@/stores/project'
 import { watch } from 'vue'
@@ -15,35 +15,34 @@ const props = defineProps<{
   projectId: string
 }>()
 
-const authTokenStore = useAuthTokenStore()
+const apiKeyStore = useApiKeyStore()
 const entityStore = useEntitiesStore()
 const projectStore = useProjectStore()
 
 useProjectChannel(props.projectId)
 
-watch(() => authTokenStore.token, async (newTokenValue) => {
+watch(() => apiKeyStore.token, async (newTokenValue) => {
   if (!newTokenValue) {
-    throw new Error('Auth token is required')
+    throw new Error('API Key is required')
   }
 
   try {
     projectStore.project = await getProject({
-      authToken: newTokenValue,
+      apiKey: newTokenValue,
       projectId: props.projectId,
       workspaceId: props.workspaceId
     })
 
     entityStore.entities = await getEntities({
-      authToken: newTokenValue,
+      apiKey: newTokenValue,
       projectId: props.projectId,
       workspaceId: props.workspaceId
     })
 
-		console.log("yay")
-    authTokenStore.isValid = true
+    apiKeyStore.isValid = true
   } catch (error) {
     // probably an invalid token
-    authTokenStore.isValid = false
+    apiKeyStore.isValid = false
     entityStore.entities = []
     projectStore.project = null
   }

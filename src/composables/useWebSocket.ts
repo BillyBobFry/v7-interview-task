@@ -2,7 +2,7 @@ import { createSharedComposable, watchOnce } from '@vueuse/core'
 import type { Channel } from 'phoenix'
 import { ref, watch } from 'vue'
 import { Socket } from 'phoenix'
-import { useAuthTokenStore } from '@/stores/authToken'
+import { useApiKeyStore } from '@/stores/apiKey'
 import { API_BASE_URL } from '@/backend/constants'
 
 
@@ -29,11 +29,11 @@ const wait = (attempts: number) =>
     setTimeout(resolve, [1000, 5000, 10000][attempts - 1] ?? 60000)
   })
 
-export const useWebSocket = createSharedComposable(() => {  
+export const useWebSocket = createSharedComposable(() => {
   const socket = ref<null | ReturnType<typeof createSocket>>(null)
   const connectionTries = ref(0)
 
-  const tokenStore = useAuthTokenStore()
+  const tokenStore = useApiKeyStore()
   const socketState = ref('closed')
 
   const updateSocketState = () => {
