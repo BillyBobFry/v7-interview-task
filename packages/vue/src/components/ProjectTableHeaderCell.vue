@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Property } from "@/backend/types";
+import type { Property } from '@v7-product-interview-task/api'
 
 defineProps<{
   columnIndex: number;

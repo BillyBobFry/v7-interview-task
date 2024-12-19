@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Entity } from "@/backend/types";
+import type { Entity } from '@v7-product-interview-task/api'
 import { computed, ref } from "vue";
 
 const props = defineProps<{

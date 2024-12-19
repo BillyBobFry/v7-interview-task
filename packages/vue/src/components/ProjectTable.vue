@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { getEntities } from '@/backend/getEntities'
-import { getProject } from '@/backend/getProject'
 import ProjectTableCell from '@/components/ProjectTableCell.vue'
 import ProjectTableHeaderCell from '@/components/ProjectTableHeaderCell.vue'
 import { useProjectChannel } from '@/composables/useProjectChannel'
@@ -9,6 +7,7 @@ import { useEntitiesStore } from '@/stores/entities'
 import { useProjectStore } from '@/stores/project'
 import { watch } from 'vue'
 import AuthHandler from './AuthHandler.vue'
+import {getEntities, getProject} from '@v7-product-interview-task/api'
 
 const props = defineProps<{
   workspaceId: string
@@ -59,11 +58,13 @@ watch(() => apiKeyStore.token, async (newTokenValue) => {
     <table class="grid" role="grid" v-if="projectStore.project"
       :style="{ gridTemplateColumns: `repeat(${projectStore.project.properties.length}, 1fr)` }">
       <thead>
+        <tr>
         <th />
         <ProjectTableHeaderCell v-for="property, index in projectStore.project.properties"
           :key="property.id"
           :property="property"
           :column-index="index" />
+        </tr>
       </thead>
       <tbody>
         <tr v-for="entity, entityIndex in entityStore.entities" :key="entity.id">

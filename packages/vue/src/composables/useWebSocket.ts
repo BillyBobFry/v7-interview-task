@@ -3,7 +3,7 @@ import type { Channel } from 'phoenix'
 import { ref, watch } from 'vue'
 import { Socket } from 'phoenix'
 import { useApiKeyStore } from '@/stores/apiKey'
-import { API_BASE_URL } from '@/backend/constants'
+import { API_BASE_URL } from '@v7-product-interview-task/api'
 
 
 const getEndpoint = () => {

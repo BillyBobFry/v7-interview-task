@@ -5,11 +5,11 @@ import {
   type Entity,
   type Project,
   type Property,
-} from '@/backend/types'
+} from '@v7-product-interview-task/api'
 
 import { useWebSocketChannel } from './useWebSocketChannel'
 
-import type { components } from '@/api'
+import type { components } from '@v7-product-interview-task/api'
 
 export type ProjectChannelHandlers = {
   onCreateEntity: (entity: Entity) => void
