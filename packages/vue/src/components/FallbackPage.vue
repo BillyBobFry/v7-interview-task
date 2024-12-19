@@ -13,10 +13,10 @@ const port = window.location.port;
     <p>
       Or visit a project in
       <a
-        href="https://go.staging.v7labs.com/"
-        target="_blank"
-        rel="noopener noreferrer"
-      >Go (Staging)</a>
+          href="https://go.v7labs.com/"
+          target="_blank"
+          rel="noopener noreferrer"
+      >Go</a>
       and replace the hostname with
       <span class="monospace">{{ `${hostname}:${port}` }}</span>
     </p>
