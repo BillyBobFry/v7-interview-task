@@ -23,7 +23,14 @@ function App() {
           />
 
           {/* Entity view */}
-          <Route path="entities/:entityId" element={<EntityView />} />
+          <Route
+            path="entities/:entityId"
+            element={
+              <ProjectProvider>
+                <EntityView />
+              </ProjectProvider>
+            }
+          />
         </Route>
         {/* Fallback route */}
         <Route path="*" element={<FallbackPage />} />

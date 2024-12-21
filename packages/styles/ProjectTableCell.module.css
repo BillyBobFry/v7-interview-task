@@ -1,10 +1,11 @@
-td {
+.cell {
   padding: 0.5rem;
   min-width: 300px;
   max-width: 500px;
   overflow: hidden;
 }
 
-i {
+.empty-cell {
   opacity: 0.75;
+  font-style: italic;
 }

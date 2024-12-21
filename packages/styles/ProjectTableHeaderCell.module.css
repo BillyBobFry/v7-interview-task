@@ -1,7 +1,8 @@
-th {
+.header-cell {
   padding: 0.5rem;
 }
 
-i {
+.property-type {
   font-weight: 400;
+  font-style: italic;
 }

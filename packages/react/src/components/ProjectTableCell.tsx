@@ -1,6 +1,6 @@
 import { Entity } from '@v7-product-interview-task/api';
 import React, { useRef } from 'react';
-import '@v7-product-interview-task/styles/ProjectTableCell.module.css'
+import styles from '@v7-product-interview-task/styles/ProjectTableCell.module.css'
 
 interface TableCellProps {
   propertyIndex: number;
@@ -19,18 +19,18 @@ export const ProjectTableCell: React.FC<TableCellProps> = ({ propertyIndex, enti
 
   return (
     <td
+      className={styles.cell}
       ref={cellRef}
       role="gridcell"
       aria-rowindex={entityIndex + 1}
       aria-colindex={propertyIndex + 1}
       tabIndex={0}
       onClick={onClickCell}
-      className="p-2 min-w-[300px] max-w-[500px] overflow-hidden"
     >
       {text ? (
         <span>{text}</span>
       ) : (
-        <i className="opacity-75">(empty)</i>
+        <span className="empty-cell">(empty)</span>
       )}
     </td>
   );

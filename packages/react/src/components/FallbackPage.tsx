@@ -1,4 +1,4 @@
-import "@v7-product-interview-task/styles/FallbackPage.module.css"
+import styles from "@v7-product-interview-task/styles/FallbackPage.module.css"
 
 export const FallbackPage = () => {
   const hostname = window.location.hostname;
@@ -9,7 +9,7 @@ export const FallbackPage = () => {
       <h1>Welcome to Go-lite</h1>
       <p>
         Visit{" "}
-        <span className="monospace">/:workspaceId/projects/:projectId</span> to
+        <span className={styles.monospace}>/:workspaceId/projects/:projectId</span> to
         use this app.
       </p>
       <p>
@@ -22,7 +22,7 @@ export const FallbackPage = () => {
           Go
         </a>{' '}
         and replace the hostname with
-        {' '}<span className="monospace">{`${hostname}:${port}`}</span>
+        {' '}<span className={styles.monospace}>{`${hostname}:${port}`}</span>
       </p>
     </div>
   );

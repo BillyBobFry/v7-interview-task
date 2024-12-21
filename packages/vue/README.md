@@ -1,29 +1,33 @@
-# V7 Product Interview Task
+# Vue Template
 
-Thank you for taking the time to do this task! This repo contains a very basic reproduction of the Go table view and an empty page for the entity view.
+This template provides a basic Go project table, built with Vue. See the root level readme for information on the challenge.
 
-- The styling is intentionally simple, and should not be used as an indication of how
-  we expect you to style your submission.
-- Feel free to use any styling solution; Tailwind, SASS, vanilla CSS - or anything else that you feel will showcase your ability to create a delightful UI!
-- Given the time constraints, we don't expect high test coverage, but small sample tests are appreciated.
-- We built this app with Vue, but you won't be judged on your mastery of Vue - we understand that you might not have prior experience with it. Mastery of web standards and Javascript are more important.
+This readme contains information on how to run the Vue template, and some context on the choices made when building the template.
 
-## What we expect
+## Getting started
 
-- A dismissable command center that is triggered with CMD+K/CTRL+K
-  - The commands should trigger UI updates
-- Integration with Go through the [API](https://docs.go.v7labs.com/)
-- HTML that follows web standards
-- Well-styled UI components
-- Attention to detail regarding user interaction and experience
-- It should work :)
-- Have fun :tada:
+### Set your API Key
 
-We expect you to take 2-4 hours completing this task. The potential scope is
-extremely large, but you should focus on the features you feel would be the
-most impactful. We value polished features over breadth of scope.
+Create a Go API key at https://go.v7labs.com/:yourWorkspaceId/settings/api-keys. Add this API key to `/packages/react/.env`.
 
-If you have any questions, then please email your contact within our talent team.
+### Run the template app
+
+From the project route:
+
+```
+npm i
+npm run dev -w packages/vue
+```
+
+### Navigate to a project
+
+Go to `http://localhost:5173/:workspaceId/projects/:projectId`. This is the same route structure as the real Go frontend, so you can visit a project in Go and replace the host with `http://localhost:5173`.
+
+## Styling
+
+We import CSS fles from a separate package so we can easily share styles between the Vue and React template apps.
+
+This need not be a consideration when completing your submission, so use whatever styling system you feel would be most effective.
 
 ## Recommended IDE Setup
 
@@ -32,31 +36,3 @@ If you have any questions, then please email your contact within our talent team
 ### Type Support for `.vue` Imports in TS
 
 TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) to make the TypeScript language service aware of `.vue` types.
-
-## Customize configuration
-
-See [Vite Configuration Reference](https://vitejs.dev/config/).
-
-## Project Setup
-
-```sh
-npm install
-```
-
-### Compile and Hot-Reload for Development
-
-```sh
-npm run dev
-```
-
-### Type-Check, Compile and Minify for Production
-
-```sh
-npm run build
-```
-
-### Run Unit Tests with [Vitest](https://vitest.dev/)
-
-```sh
-npm run test:unit
-```

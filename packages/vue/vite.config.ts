@@ -18,6 +18,10 @@ export default defineConfig({
         target: "https://go.v7labs.com",
         changeOrigin: true,
       },
+      '/socket': {
+        target: `ws://go.v7labs.com:4000`,
+        ws: true,
+      },
       "/ws": {
         target: "wss://go.v7labs.com",
         rewriteWsOrigin: true,

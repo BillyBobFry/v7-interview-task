@@ -1,50 +1,34 @@
-# React + TypeScript + Vite
+# React Template
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This template provides a basic Go project table, built with React. See the root level readme for information on the challenge.
 
-Currently, two official plugins are available:
+This readme contains information on how to run the React template, and some context on the choices made when building the template.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Getting started
 
-## Expanding the ESLint configuration
+### Set your API Key
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+Create a Go API key at https://go.v7labs.com/:yourWorkspaceId/settings/api-keys. Add this API key to `/packages/react/.env`.
 
-- Configure the top-level `parserOptions` property like this:
+### Run the template app
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+From the project route:
+
+```
+npm i
+npm run dev -w packages/react
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+### Navigate to a project
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+Go to `http://localhost:5173/:workspaceId/projects/:projectId`. This is the same route structure as the real Go frontend, so you can visit a project in Go and replace the host with `http://localhost:5173`.
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+## Styling
+
+We use CSS modules so that we can easily share styles between the Vue and React template apps.
+This need not be a consideration when completing your submission, so use whatever styling system you feel would be most effective.
+
+## Global state
+
+We use context because it's built-in and we don't want to lead you towards any particular third party library. Please use whichever state management solution
+you feel would be best.

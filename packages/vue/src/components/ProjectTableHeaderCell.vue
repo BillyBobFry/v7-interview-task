@@ -9,13 +9,14 @@ defineProps<{
 
 <template>
   <th
+    class="header-cell"
     role="gridcell"
     aria-rowindex="1"
     :aria-colindex="columnIndex + 1"
     tabindex="0"
   >
     {{ property.name }}
-    <i>({{ property.type }})</i>
+    <span class="property-type">({{ property.type }})</span>
   </th>
 </template>
 

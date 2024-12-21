@@ -18,34 +18,35 @@ export const ProjectProvider: React.FC<{
   const [entities, setEntities] = useState<Entity[]>([]);
 
   const {workspaceId, projectId} = useParams() as { workspaceId: string; projectId: string };
-  const load = async () => {
-    const apiKey = import.meta.env.VITE_API_KEY
-    if (!apiKey) {
-      throw new Error('VITE_API_KEY env variable is not set');
-    }
-
-    try {
-      const [projectData, entityData] = await Promise.all([
-        getProject({
-          apiKey,
-          projectId,
-          workspaceId,
-        }),
-        getEntities({
-          apiKey,
-          projectId,
-          workspaceId,
-        }),
-      ]);
-
-      setProject(projectData);
-      setEntities(entityData);
-    } catch {
-      setEntities([]);
-      setProject(null);
-    }
-  };
+  
   useEffect(() => {
+    const load = async () => {
+      const apiKey = import.meta.env.VITE_API_KEY
+      if (!apiKey) {
+        throw new Error('VITE_API_KEY env variable is not set');
+      }
+  
+      try {
+        const [projectData, entityData] = await Promise.all([
+          getProject({
+            apiKey,
+            projectId,
+            workspaceId,
+          }),
+          getEntities({
+            apiKey,
+            projectId,
+            workspaceId,
+          }),
+        ]);
+  
+        setProject(projectData);
+        setEntities(entityData);
+      } catch {
+        setEntities([]);
+        setProject(null);
+      }
+    };
     load();
   }, [projectId, workspaceId]);
 

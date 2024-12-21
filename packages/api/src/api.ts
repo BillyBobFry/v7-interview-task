@@ -4,6 +4,27 @@
  */
 
 export interface paths {
+    "/api/workspaces/{workspace_id}/integrations/all/connections": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List all integration connections
+         * @description Lists all the connections created for the integration in the workspace.
+         *
+         */
+        get: operations["integration-connections-list"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/workspaces/{workspace_id}/projects/{project_id}/entity_ids": {
         parameters: {
             query?: never;
@@ -48,6 +69,34 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/workspaces/{workspace_id}/projects/{project_id}/properties/{property_id_or_slug}/bulk_confirm_file_upload": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Confirm files has been uploaded to fields
+         * @description Finishes files upload process for a given set of entities within property.
+         *     This operation is atomic and will either confirm all files or none in case of any failures.
+         *
+         *     This API is limited to only simple `file` properties and will not work with any compound types
+         *     that require additional processing after upload, like `file_collection` field itself (you can still confirm files within that collection).
+         *
+         *     Confirming files with this API in a manual collection will also trigger a recalculation of all depended fields in parent project.
+         *     This, together with the fact that multiple files are being confirmed at once aims to reduce token consumption in parent projects.
+         *
+         */
+        post: operations["entity-bulk-confirm-file-upload"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/workspaces/{workspace_id}/tool_integrations/toggle": {
         parameters: {
             query?: never;
@@ -84,6 +133,28 @@ export interface paths {
          * @description Returns details of entities in a given Project, allows for filtering
          */
         post: operations["filtered-entity-list"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/workspaces/{workspace_id}/projects/{project_id}/billing/usage": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get limit usage for a project
+         * @description Returns limit usage information for a project, both for plan limit and system ones.
+         *     The plan usage is returned by the current effective plan of the project.
+         *
+         */
+        get: operations["billing-project-usage"];
+        put?: never;
+        post?: never;
         delete?: never;
         options?: never;
         head?: never;
@@ -133,6 +204,80 @@ export interface paths {
          * @description Creates a new view for a project
          */
         post: operations["project-add-view"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/workspaces/{workspace_id}/projects/{project_id}/members/{user_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get a member of a Project
+         * @description Returns details of a single user in a given Project.
+         */
+        get: operations["user-project-member-get"];
+        /**
+         * Update a user's role in a Project.
+         * @description Updates a user's role in a Project (a role has to be already assigned). This role will override
+         *     any inherited roles from the Workspace (if any). `user_id` parameter can either be valid user's UUID
+         *     or `anyone_in_workspace` or `anyone_in_folder`. `anyone_in_workspace` and `anyone_in_folder`
+         *     are special user IDs that can be used to grant roles to anyone in the Workspace and/or Folder
+         *     respectively. Those permissions only apply to users that don't have any roles explicitly granted to
+         *     them on Project or parent resources.
+         *
+         */
+        put: operations["user-project-member-update"];
+        /**
+         * Adds a user's role in a Project.
+         * @description Adds a user's role in a Project. This role will override any inherited roles from the Workspace (if any).
+         *     `user_id` parameter can either be valid user's UUID or `anyone_in_workspace` or `anyone_in_folder`.
+         *     `anyone_in_workspace` and `anyone_in_folder` are special user IDs that can be used to grant roles to anyone in
+         *     the Workspace and/or Folder respectively. Those permissions only apply to users that don't have any
+         *     roles explicitly granted to them on Project or parent resources.
+         *
+         */
+        post: operations["user-project-member-add"];
+        /**
+         * Delete a user's role in a Project.
+         * @description Deletes a user's role in a Project. After this operation user may loose access to resource, unless
+         *     they have inherited roles from parent resources. `user_id` parameter can either be valid user's UUID
+         *     or `anyone_in_workspace` or `anyone_in_folder`. `anyone_in_workspace` and `anyone_in_folder`
+         *     are special user IDs that can be used to revoke access from anyone in the Workspace and/or Folder
+         *     respectively that don't have any roles explicitly granted to them on Project or parent resources.
+         *
+         */
+        delete: operations["user-project-member-delete"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/workspaces/{workspace_id}/spaces": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List spaces
+         * @description Lists spaces.
+         *
+         */
+        get: operations["space-list"];
+        put?: never;
+        /**
+         * Create a new space from a query
+         * @description Creates a new space from a query.
+         *
+         */
+        post: operations["space-create"];
         delete?: never;
         options?: never;
         head?: never;
@@ -238,6 +383,46 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/workspaces/{workspace_id}/ask_go/{session_id}/message_metadata": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /**
+         * Sets metadata object onto the message
+         * @description Sets metadata object onto the message within the session
+         */
+        put: operations["ask-go-set-message-metadata"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/workspaces/{workspace_id}/projects/{project_id}/invitations/accept": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Accept an invitation
+         * @description Accepts the invitation, adding user to the project and its parent workspace
+         */
+        post: operations["project-invitation-accept"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/workspaces/{workspace_id}/projects/{project_id}/properties": {
         parameters: {
             query?: never;
@@ -285,6 +470,26 @@ export interface paths {
          * @description Delete a given project's view
          */
         delete: operations["project-delete-view"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/workspaces/{workspace_id}/projects/{project_id}/entities/{entity_id}/properties/{property_id_or_slug}/set_metadata": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /**
+         * Sets a field metadata
+         * @description Sets a metadata of a field
+         */
+        put: operations["entity-set-metadata"];
+        post?: never;
+        delete?: never;
         options?: never;
         head?: never;
         patch?: never;
@@ -406,6 +611,28 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/workspaces/{workspace_id}/integrations/{integration_id}/connections": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Create a new connect session
+         * @description Generates new connect session that includes a token that can be used to
+         *     create new connection on the Integrator.
+         *
+         */
+        post: operations["integration-connection-create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/workspaces/{workspace_id}/projects/{project_id}/entities/{entity_id}/previous": {
         parameters: {
             query?: never;
@@ -486,6 +713,26 @@ export interface paths {
          * @description Returns details of a single user
          */
         get: operations["user-get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/workspaces/{workspace_id}/invitations/verify": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Verify invitation
+         * @description Checks if invitation token is valid for a given email address and workspace
+         */
+        get: operations["workspace-invitation-verify"];
         put?: never;
         post?: never;
         delete?: never;
@@ -582,6 +829,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/workspaces/{workspace_id}/projects/{project_id}/invitations/{invitation_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /**
+         * Delete an pending invitation from a Project
+         * @description Deletes an pending invitation from a Project.
+         */
+        delete: operations["project-invitation-delete"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/workspaces/{workspace_id}/imports/{import_id}/start": {
         parameters: {
             query?: never;
@@ -620,7 +887,7 @@ export interface paths {
         /**
          * Create new invitation into a Workspace
          * @description Creates a new invitation into a Workspace. The invitation will be sent to the email address provided.
-         *     If the invitation is already penfing or expired for this email/workspace combo,
+         *     If the invitation is already pending or expired for this email/workspace combo,
          *     if will be updated with the new role and resend.
          *
          */
@@ -672,6 +939,26 @@ export interface paths {
          * @description Updates information of the currently logged in user
          */
         put: operations["user-update-me"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/workspaces/{workspace_id}/projects/{project_id}/invitations/verify": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Verify invitation
+         * @description Checks if invitation token is valid for a given email address, project and workspace
+         */
+        get: operations["project-invitation-verify"];
+        put?: never;
         post?: never;
         delete?: never;
         options?: never;
@@ -819,6 +1106,32 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/workspaces/{workspace_id}/spaces/{space_id}/messages": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List messages in a space
+         * @description Lists messages in a space.
+         *
+         */
+        get: operations["space-list-messages"];
+        put?: never;
+        /**
+         * Add a query to a space
+         * @description Adds a query to a space.
+         *
+         */
+        post: operations["space-add-query"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/workspaces/{workspace_id}/triggers": {
         parameters: {
             query?: never;
@@ -939,6 +1252,36 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/workspaces/{workspace_id}/projects/{project_id}/invitations": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List invitations in a Project
+         * @description Returns details of all invitations in a given Project.
+         *     Supports pagination using limit/offset or cursors. Maximum page size is 1000.
+         *
+         */
+        get: operations["project-invitation-list"];
+        put?: never;
+        /**
+         * Create new invitation into a Project
+         * @description Creates a new invitation into a Project. The invitation will be sent to the email address provided.
+         *     Invitation will also add the user to the parent workspace with the role `reader`.
+         *     If the invitation is already pending or expired for this email/project combo,
+         *     if will be updated with the new role and resend.
+         *
+         */
+        post: operations["project-invitation-create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/workspaces/{workspace_id}/projects": {
         parameters: {
             query?: never;
@@ -957,6 +1300,27 @@ export interface paths {
          * @description Creates a new project
          */
         post: operations["project-create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/workspaces/{workspace_id}/integrations/{integration_id}/connections/{connection_id}/start": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Start the connection
+         * @description Initiates syncing via the Integrator for the connection.
+         *
+         */
+        post: operations["integration-connection-start"];
         delete?: never;
         options?: never;
         head?: never;
@@ -1004,7 +1368,14 @@ export interface paths {
         put?: never;
         /**
          * Clone a project
-         * @description Clones a project
+         * @description Clones a project from a project template. "Project template" can be any project
+         *     you have access to, on any workspace given as `template_id` parameter (which should be that source project's ID).
+         *     The new project will be created in the workspace given as `workspace_id` parameter with a name given as `name` parameter.
+         *     By default all project structure and all entities will be cloned, however this operation is not designed to work with large
+         *     source projects.
+         *     Optionally you can skip cloning entities by setting `clone_entities` to `false` in order to clone only
+         *     project structure.
+         *
          */
         post: operations["project-clone"];
         delete?: never;
@@ -1114,6 +1485,32 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/workspaces/{workspace_id}/spaces/{space_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get a space
+         * @description Gets a space by ID.
+         *
+         */
+        get: operations["space-get"];
+        put?: never;
+        post?: never;
+        /**
+         * Delete a space
+         * @description Deletes a space by ID.
+         *
+         */
+        delete: operations["space-delete"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/workspaces/{workspace_id}/projects/{project_id}/entities/{entity_id}": {
         parameters: {
             query?: never;
@@ -1207,7 +1604,9 @@ export interface paths {
         put?: never;
         /**
          * Create an entity
-         * @description Creates a new entity
+         * @description Creates a new entity.
+         *     For collection project, the `parent_entity_id` is required and has to be set to entity of a parent project.
+         *
          */
         post: operations["entity-create"];
         delete?: never;
@@ -1265,6 +1664,27 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/workspaces/{workspace_id}/integrations/{integration_id}/connections/{connection_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /**
+         * Delete the connection
+         * @description Deletes specified connection from the project and integrator.
+         *
+         */
+        delete: operations["integration-connection-delete"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/workspaces/{workspace_id}/tool_keys/{tool_key_id}": {
         parameters: {
             query?: never;
@@ -1282,6 +1702,26 @@ export interface paths {
          *
          */
         delete: operations["tools-delete-key"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/workspaces/{workspace_id}/projects/{project_id}/members": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List members in a Project
+         * @description Returns details of all members in a given Project.
+         */
+        get: operations["user-project-members-list"];
+        put?: never;
+        post?: never;
+        delete?: never;
         options?: never;
         head?: never;
         patch?: never;
@@ -1329,11 +1769,21 @@ export interface components {
             project_id: components["schemas"]["Common.NullableUUID"];
         };
         /**
+         * Invitations.ProjectInvitationVerifyResponse
+         * @description Workspace invitation verification response
+         */
+        "Invitations.ProjectInvitationVerifyResponse": {
+            expires_at: components["schemas"]["Common.DateTime"];
+            /** @enum {string} */
+            status: "pending" | "expired";
+        };
+        /**
          * Projects.ListEntities.FieldFileResponse
          * @description Response for a file value
          */
         "Projects.ListEntities.FieldFileResponse": {
             original_filename: string | null;
+            pdf?: components["schemas"]["Projects.ListEntities.PDFVersion"];
             updated_by: (components["schemas"]["Common.UUID"] | components["schemas"]["Projects.Common.PropertyTool"]) | null;
             value: string | null;
         };
@@ -1344,6 +1794,8 @@ export interface components {
          *
          */
         "Projects.SelectMaxSelected": number | null;
+        /** Common.String */
+        "Common.String": string;
         /**
          * Projects.UpdateProjectCoverImageRequest
          * @description Upload of project cover image
@@ -1386,22 +1838,13 @@ export interface components {
             url: string | null;
         };
         /**
-         * EntityFilters.EntityId
-         * @description Filter entities based on entity id
+         * Projects.ListEntities.CollectionPreview
+         * @description Preview of a nested collection data
          */
-        "EntityFilters.EntityId": {
-            matcher: {
-                /** @enum {string} */
-                name: "any_of";
-                values: components["schemas"]["Common.UUID"][];
-            } | {
-                /** @enum {string} */
-                name: "none_of";
-                values: components["schemas"]["Common.UUID"][];
-            };
-            /** @enum {string} */
-            subject: "id";
-        };
+        "Projects.ListEntities.CollectionPreview": {
+            entity_previews: components["schemas"]["Projects.ListEntities.EntityPreview"][];
+            total_entity_count: number;
+        } | null;
         /**
          * Projects.ListEntities.EntityResponse
          * @description An entity
@@ -1409,7 +1852,7 @@ export interface components {
         "Projects.ListEntities.EntityResponse": {
             active_view_ids?: components["schemas"]["Common.UUID"][];
             fields: {
-                [key: string]: components["schemas"]["Projects.ListEntities.FieldResponse"] | undefined;
+                [key: string]: components["schemas"]["Projects.ListEntities.FieldResponse"];
             };
             id: components["schemas"]["Common.UUID"];
             parent_entity_id?: components["schemas"]["Common.NullableUUID"];
@@ -1419,7 +1862,7 @@ export interface components {
          * Projects.AddPropertyRequest
          * @description Add property request
          */
-        "Projects.AddPropertyRequest": components["schemas"]["Projects.AddBasicPropertyRequest"] | components["schemas"]["Projects.AddPDFPropertyRequest"] | components["schemas"]["Projects.AddSingleSelectPropertyRequest"] | components["schemas"]["Projects.AddMultiSelectPropertyRequest"] | components["schemas"]["Projects.AddUserSelectPropertyRequest"] | components["schemas"]["Projects.AddTablePropertyRequest"];
+        "Projects.AddPropertyRequest": components["schemas"]["Projects.AddBasicPropertyRequest"] | components["schemas"]["Projects.AddPDFPropertyRequest"] | components["schemas"]["Projects.AddSingleSelectPropertyRequest"] | components["schemas"]["Projects.AddMultiSelectPropertyRequest"] | components["schemas"]["Projects.AddUserSelectPropertyRequest"] | components["schemas"]["Projects.AddTablePropertyRequest"] | components["schemas"]["Projects.AddReferencePropertyRequest"];
         /**
          * Pagination.OrderDirections
          * @description List of order directions for the fields in `order_by`
@@ -1436,12 +1879,34 @@ export interface components {
         "Library.EntityResponseInList": {
             active_view_ids?: components["schemas"]["Common.UUID"][];
             fields: {
-                [key: string]: components["schemas"]["Projects.ListEntities.FieldResponse"] | undefined;
+                [key: string]: components["schemas"]["Projects.ListEntities.FieldResponse"];
             };
             id: components["schemas"]["Common.UUID"];
             library_attributes: components["schemas"]["Library.LibraryAttributesResponse"];
             parent_entity_id?: components["schemas"]["Common.NullableUUID"];
             project_id: components["schemas"]["Common.UUID"];
+        };
+        /**
+         * Invitations.ListWorkspaceInvitationsResponse
+         * @description List invitations response
+         */
+        "Invitations.ListWorkspaceInvitationsResponse": {
+            data: components["schemas"]["Invitations.WorkspaceInvitationResponse"][];
+            metadata: components["schemas"]["Pagination.PageMetadata"];
+        };
+        /**
+         * Invitations.WorkspaceInvitation
+         * @description A workspace invitation
+         */
+        "Invitations.WorkspaceInvitation": {
+            email: string;
+            expires_at: components["schemas"]["Common.DateTime"];
+            id: components["schemas"]["Common.UUID"];
+            invite_url: string;
+            role: components["schemas"]["Invitations.Role"];
+            /** @enum {string} */
+            status: "pending" | "expired" | "accepted";
+            workspace_id: components["schemas"]["Common.UUID"];
         };
         /**
          * Billing.PlanProvider
@@ -1451,6 +1916,15 @@ export interface components {
         "Billing.PlanProvider": "stripe" | "local";
         /** Number */
         Number: number;
+        /**
+         * AnyOf
+         * @description Matches items based on whether the values from the subject have any of the values specified in the filter
+         */
+        AnyOf: {
+            /** @enum {string} */
+            name: "any_of";
+            values: components["schemas"]["Common.UUID"][];
+        };
         /**
          * Projects.CreateProjectRequest
          * @description Create project request
@@ -1466,17 +1940,39 @@ export interface components {
             data: components["schemas"]["ApiKeys.ApiKeyResponse"][];
             metadata: components["schemas"]["Pagination.PageMetadata"];
         };
+        /** Invitations.WorkspaceInvitationResponse */
+        "Invitations.WorkspaceInvitationResponse": components["schemas"]["Invitations.WorkspaceInvitation"] | components["schemas"]["Invitations.ProjectInvitation"];
+        /**
+         * FieldSelectOptionValue
+         * @description Filter entities based on field's select value
+         */
+        FieldSelectOptionValue: {
+            matcher: components["schemas"]["PropertyAnyOf"] | components["schemas"]["PropertyAllOf"] | components["schemas"]["PropertyNoneOf"];
+            /** @enum {string} */
+            subject: "field_select_option_value";
+        };
         /** Imports.FormatOptions */
         "Imports.FormatOptions": components["schemas"]["Imports.FormatOptionsCSV"];
-        /**
-         * WorkspaceInvitations.AcceptInvitationRequest
-         * @description A request to accept workspece invitation
-         */
-        "WorkspaceInvitations.AcceptInvitationRequest": {
-            invite_token: string;
-        };
         /** Tools.Integrations.MaxInputCount */
         "Tools.Integrations.MaxInputCount": number | "unlimited";
+        /**
+         * FieldTextValue
+         * @description Filter entities based on field's text value
+         */
+        FieldTextValue: {
+            matcher: components["schemas"]["PropertyAnyOf"] | components["schemas"]["PropertyNoneOf"] | components["schemas"]["PropertyContainsAnyOf"] | components["schemas"]["PropertyContainsNoneOf"];
+            /** @enum {string} */
+            subject: "field_text_value";
+        };
+        /**
+         * EntityId
+         * @description Filter entities based on entity id
+         */
+        EntityId: {
+            matcher: components["schemas"]["AnyOf"] | components["schemas"]["NoneOf"];
+            /** @enum {string} */
+            subject: "entity_id";
+        };
         /**
          * Projects.SingleSelectPropertyConfigResponse
          * @description Select property configuration
@@ -1523,6 +2019,12 @@ export interface components {
             updated_at: components["schemas"]["Common.DateTime"];
             workspace_id: components["schemas"]["Common.UUID"];
         };
+        /** Spaces.DataAttachmentURL */
+        "Spaces.DataAttachmentURL": {
+            attachment_url: components["schemas"]["Common.URL"];
+            /** @enum {string} */
+            type: "attachment_url";
+        };
         /**
          * Billing.LimitAggregation
          * @enum {string}
@@ -1535,7 +2037,15 @@ export interface components {
         "AskGo.AskRequest": {
             ask: string;
             /** @default [] */
-            upload_entity_ids: components["schemas"]["Common.UUID"][];
+            upload_entity_ids?: components["schemas"]["Common.UUID"][];
+        };
+        /**
+         * Tools.Integrations.GroundingFeature
+         * @description Grounding feature.
+         */
+        "Tools.Integrations.GroundingFeature": {
+            supported_inputs: components["schemas"]["Tools.Integrations.SupportedInputs"];
+            supported_outputs: components["schemas"]["Tools.Integrations.SupportedOutputs"];
         };
         /**
          * Users.UserMeUpdateRequest
@@ -1550,15 +2060,54 @@ export interface components {
             signup_completed?: boolean;
         };
         /**
-         * Users.UserResponse
-         * @description A user
+         * AskGo.SetMessageMetadataRequest
+         * @description Set message metadata request
          */
-        "Users.UserResponse": {
-            email?: string;
-            first_name?: string;
-            id: components["schemas"]["Common.UUID"];
-            last_name?: string;
+        "AskGo.SetMessageMetadataRequest": {
+            message_id: components["schemas"]["Common.UUID"];
+            metadata: components["schemas"]["AskGo.MessageMetadata"];
         };
+        /**
+         * Integrations.ConnectionStatus
+         * @description A status of connection.
+         * @enum {string}
+         */
+        "Integrations.ConnectionStatus": "not_started" | "started" | "project_gone";
+        /**
+         * Invitations.InvitedUser
+         * @description Invited user
+         */
+        "Invitations.InvitedUser": components["schemas"]["Invitations.InvitedUserSuccess"] | components["schemas"]["Invitations.InvitedUserError"];
+        /** Spaces.ErrorMessage */
+        "Spaces.ErrorMessage": {
+            created_at: components["schemas"]["Common.DateTime"];
+            id: components["schemas"]["Common.UUID"];
+            parent_message_id: components["schemas"]["Common.UUID"];
+            text: string;
+            /** @enum {string} */
+            type: "error";
+            updated_at: components["schemas"]["Common.DateTime"];
+        };
+        /** Integrations.ConnectionResponse */
+        "Integrations.ConnectionResponse": components["schemas"]["Integrations.NotStartedConnectionResponse"] | components["schemas"]["Integrations.StartedConnectionResponse"] | components["schemas"]["Integrations.ProjectGoneConnectionResponse"];
+        /**
+         * PropertyContainsNoneOf
+         * @description Matches items based on whether the values from the subject contains the one specified in the filter
+         */
+        PropertyContainsNoneOf: {
+            /** @default true */
+            case_sensitive?: boolean;
+            /** @enum {string} */
+            name: "property_contains_none_of";
+            property_id: components["schemas"]["Common.UUID"];
+            /** @default false */
+            reference_support?: boolean;
+            values: string[];
+        };
+        /** Users.PermissionCondition */
+        "Users.PermissionCondition": components["schemas"]["Users.ConditionManagedRole"];
+        /** Users.UserResponse */
+        "Users.UserResponse": components["schemas"]["Users.User"] | ("anyone_in_folder" | "anyone_in_workspace" | "anyone");
         /**
          * Projects.UpdateSingleSelectPropertyConfig
          * @description Select property configuration.
@@ -1574,7 +2123,7 @@ export interface components {
              *
              * @default []
              */
-            remove_options: string[];
+            remove_options?: string[];
             /**
              * @description Add or update select options.
              *     If the value already exists, it will be updated either with new color, or new value text.
@@ -1583,35 +2132,29 @@ export interface components {
              *
              * @default []
              */
-            upsert_options: {
+            upsert_options?: {
                 color?: components["schemas"]["Projects.SelectOptionColor"];
                 new_value?: string | null;
+                tool_fallback?: boolean | null;
                 value: string;
             }[];
         };
         /**
-         * EntityFilters.SelectOptionValue
-         * @description Filter entities based on select option value
+         * Projects.Entities.EntityBulkConfirmUploadResponse
+         * @description Entity bulk confirm upload response
          */
-        "EntityFilters.SelectOptionValue": {
-            matcher: {
-                /** @enum {string} */
-                name: "property_any_of";
-                property_id: components["schemas"]["Common.UUID"];
-                values: string[];
-            } | {
-                /** @enum {string} */
-                name: "property_all_of";
-                property_id: components["schemas"]["Common.UUID"];
-                values: string[];
-            } | {
-                /** @enum {string} */
-                name: "property_none_of";
-                property_id: components["schemas"]["Common.UUID"];
-                values: string[];
-            };
+        "Projects.Entities.EntityBulkConfirmUploadResponse": {
+            affected_count: number;
+        };
+        /**
+         * ViewAllOfFieldStatuses
+         * @description Matches items in a view based on whether all of their field statuses are in the filter values
+         */
+        ViewAllOfFieldStatuses: {
             /** @enum {string} */
-            subject: "select_option_value";
+            name: "view_all_of";
+            values: components["schemas"]["Projects.ListEntities.FieldStatus"][];
+            view_id: components["schemas"]["Common.UUID"];
         };
         /**
          * Projects.SubProjectPropertyConfigResponse
@@ -1627,10 +2170,13 @@ export interface components {
          */
         "Projects.ProjectResponseInList": {
             cover_image_urls: components["schemas"]["Projects.ProjectCoverImageURLs"];
+            created_at: components["schemas"]["Common.DateTime"];
             id: components["schemas"]["Common.UUID"];
+            membership_info?: components["schemas"]["Projects.MembershipInfo"];
             name: string | null;
             parent_property: components["schemas"]["Projects.PropertyResponse"] | null;
             properties: components["schemas"]["Projects.PropertyResponse"][];
+            updated_at: components["schemas"]["Common.DateTime"];
             workspace_id: components["schemas"]["Common.UUID"];
         };
         /**
@@ -1638,8 +2184,10 @@ export interface components {
          * @description A property input
          */
         "Projects.PropertyInputResponse": {
+            entities_filter?: components["schemas"]["EntityFilters.NullableFilter"];
             entity_id?: components["schemas"]["Common.NullableUUID"];
             property_id: components["schemas"]["Common.UUID"];
+            via_property_id?: components["schemas"]["Common.NullableUUID"];
         };
         /**
          * Common.URL
@@ -1647,11 +2195,46 @@ export interface components {
          */
         "Common.URL": string;
         /**
+         * Projects.ListEntities.FieldPreview
+         * @description Preview of a field
+         */
+        "Projects.ListEntities.FieldPreview": {
+            manual_value: components["schemas"]["Projects.ListEntities.FieldValueResponse"];
+            property_id: components["schemas"]["Common.UUID"];
+            property_type?: components["schemas"]["Projects.Common.PropertyType"];
+            tool_value: components["schemas"]["Projects.ListEntities.FieldValueResponse"];
+        };
+        /**
          * Projects.OnlyParentProjects
          * @description Only return parent projects
          * @default false
          */
         "Projects.OnlyParentProjects": boolean;
+        /**
+         * Projects.UpdateReferencePropertyRequest
+         * @description Reference Property configuration.
+         *     You can send any combination of the available configuration options.
+         *
+         */
+        "Projects.UpdateReferencePropertyRequest": {
+            /** @description Update reference property configuration.
+             *     Allows to provide source project and entity limit (0 for to use system maximum).
+             *     Source project can be changed only if the property doesn't have any values already set.
+             *      */
+            config: {
+                entity_limit?: components["schemas"]["Projects.NullableReferenceEntityLimit"];
+                project_id?: components["schemas"]["Common.NullableUUID"];
+            };
+            description: string | null;
+            /** @deprecated */
+            input_ids?: components["schemas"]["Common.UUID"][] | null;
+            inputs?: components["schemas"]["Projects.PropertyInput"][] | null;
+            is_grounded?: boolean;
+            name: string;
+            tool: components["schemas"]["Projects.Common.PropertyTool"];
+            /** @enum {string} */
+            type: "reference";
+        };
         /**
          * ApiKeys.CreateApiKeyRequest
          * @description Create api key request
@@ -1670,10 +2253,25 @@ export interface components {
             /** @deprecated */
             input_ids?: components["schemas"]["Common.UUID"][] | null;
             inputs?: components["schemas"]["Projects.PropertyInput"][] | null;
+            is_grounded?: boolean;
             name: string;
             tool: components["schemas"]["Projects.Common.PropertyTool"];
             /** @enum {string} */
-            type: "collection";
+            type: "collection" | "file_collection";
+        };
+        /**
+         * Invitations.CreateInvitationResponse
+         * @description Create invitation response. Describes each created invitation (or an error if it failed)
+         */
+        "Invitations.CreateInvitationResponse": {
+            data: components["schemas"]["Invitations.InvitedUser"][];
+        };
+        /**
+         * Projects.Entities.EntityBulkConfirmUploadRequest
+         * @description Request to confirm the file upload into multiple entities at once.
+         */
+        "Projects.Entities.EntityBulkConfirmUploadRequest": {
+            entity_ids: components["schemas"]["Common.UUID"][];
         };
         /** Projects.PropertyLayoutId */
         "Projects.PropertyLayoutId": {
@@ -1692,25 +2290,29 @@ export interface components {
             entity_id: components["schemas"]["Common.UUID"];
             error_message: string | null;
             ground_truth: boolean;
+            indexing_error_message?: string | null;
+            indexing_status?: components["schemas"]["Projects.ListEntities.FieldStatus"];
+            manual_metadata?: components["schemas"]["Projects.ListEntities.FieldManualMetadataResponse"];
             manual_value: components["schemas"]["Projects.ListEntities.FieldValueResponse"];
             property_hash: string | null;
             property_id: components["schemas"]["Common.UUID"];
             property_type: components["schemas"]["Projects.Common.PropertyType"];
             status: components["schemas"]["Projects.ListEntities.FieldStatus"];
+            subproject_preview?: components["schemas"]["Projects.ListEntities.SubprojectPreviewResponse"];
             tool_error_message?: string | null;
-            tool_metadata?: components["schemas"]["Projects.ListEntities.FieldMetadataResponse"];
+            tool_metadata?: components["schemas"]["Projects.ListEntities.FieldToolMetadataResponse"];
             tool_status?: components["schemas"]["Projects.ListEntities.FieldStatus"];
             tool_value: components["schemas"]["Projects.ListEntities.FieldValueResponse"];
             updated_at: components["schemas"]["Common.DateTime"];
         };
         /**
          * Library.ListEntitiesOrderBy
-         * @description List of field names to order by
+         * @description List of property slugs/ids to order by
          * @example [
          *       "id"
          *     ]
          */
-        "Library.ListEntitiesOrderBy": "id"[] | null;
+        "Library.ListEntitiesOrderBy": (components["schemas"]["Common.UUID"] | string)[] | null;
         /**
          * ApiKeys.ApiKeyResponse
          * @description An api key
@@ -1729,6 +2331,7 @@ export interface components {
          * @description An export
          */
         "Exports.ExportResponse": {
+            format: components["schemas"]["Exports.Format"];
             id: components["schemas"]["Common.UUID"];
             inserted_at: components["schemas"]["Common.DateTime"];
             name: string;
@@ -1737,6 +2340,19 @@ export interface components {
             status: "pending" | "complete" | "error";
             updated_at: components["schemas"]["Common.DateTime"];
             url: string | null;
+        };
+        /** Spaces.ProgressMessage */
+        "Spaces.ProgressMessage": {
+            created_at: components["schemas"]["Common.DateTime"];
+            id: components["schemas"]["Common.UUID"];
+            messages: components["schemas"]["Spaces.SystemMessage"][];
+            parent_message_id: components["schemas"]["Common.NullableUUID"];
+            pct_complete: number | null;
+            status: components["schemas"]["Spaces.Status"];
+            text: string;
+            /** @enum {string} */
+            type: "progress";
+            updated_at: components["schemas"]["Common.DateTime"];
         };
         /**
          * EntityFilters.GroupFilter
@@ -1757,6 +2373,12 @@ export interface components {
             metadata?: components["schemas"]["Workspaces.WorkspaceMetadata"];
             name?: string;
         };
+        /** Spaces.DataText */
+        "Spaces.DataText": {
+            text: string;
+            /** @enum {string} */
+            type: "text";
+        };
         /**
          * Pagination.TotalCount
          * @description The total count of records for the given query. Always `null` when using cursor-based  pagination.
@@ -1774,7 +2396,7 @@ export interface components {
          * field_value
          * @description Set a fields value
          */
-        field_value: components["schemas"]["TYPED_SELECT"] | components["schemas"]["TYPED_TEXT"] | components["schemas"]["TYPED_JSON"] | components["schemas"]["TYPED_URL"] | components["schemas"]["TYPED_FILE_URL"] | (string | null) | number | string[];
+        field_value: components["schemas"]["TYPED_SELECT"] | components["schemas"]["TYPED_TEXT"] | components["schemas"]["TYPED_JSON"] | components["schemas"]["TYPED_URL"] | components["schemas"]["TYPED_FILE_URL"] | components["schemas"]["TYPED_FILE_BASE64"] | components["schemas"]["TYPED_REFERENCE"] | (string | null) | number | string[];
         /**
          * Billing.UnlimitedValue
          * @enum {string}
@@ -1790,7 +2412,7 @@ export interface components {
          */
         "Users.UpdateMemberRequest": {
             /** @enum {string} */
-            role?: "admin" | "worker";
+            role?: "admin" | "editor" | "worker" | "reader";
         };
         /**
          * Common.Email
@@ -1799,24 +2421,34 @@ export interface components {
          */
         "Common.Email": string;
         /**
+         * Exports.Format
+         * @default csv
+         * @enum {string}
+         */
+        "Exports.Format": "csv" | "xlsx";
+        /**
          * Projects.PropertyResponse
          * @description A property
          */
         "Projects.PropertyResponse": {
             config?: components["schemas"]["Projects.PropertyConfigResponse"];
             description: string | null;
+            effective_tool?: components["schemas"]["Projects.Common.PropertyTool"];
             hash: string;
             id: components["schemas"]["Common.UUID"];
             /** @deprecated */
             input_ids: components["schemas"]["Common.UUID"][];
             inputs: components["schemas"]["Projects.PropertyInputResponse"][];
+            is_grounded: boolean;
             name: string;
             /** @enum {string} */
             owner: "user" | "system";
             parent_project_id?: components["schemas"]["Common.NullableUUID"];
             parent_property_id?: components["schemas"]["Common.NullableUUID"];
             slug: string;
+            supported_indices?: "semantic"[];
             tool: components["schemas"]["Projects.Common.PropertyTool"];
+            tool_version?: string | null;
             type: components["schemas"]["Projects.Common.PropertyType"];
         };
         /**
@@ -1835,13 +2467,32 @@ export interface components {
             name: string | null;
         };
         /**
+         * FieldStatus
+         * @description Filter entities based on a fields status
+         */
+        FieldStatus: {
+            matcher: components["schemas"]["PropertyAnyOf"] | components["schemas"]["PropertyNoneOf"];
+            /** @enum {string} */
+            subject: "field_status";
+        };
+        /**
+         * Projects.ReferenceEntityLimit
+         * @description Maximum number of matched entities to reference. 0 value will use default system limit (1000).
+         */
+        "Projects.ReferenceEntityLimit": number;
+        /**
          * Projects.PropertyInput
-         * @description A property input. If entity_id is null, the input will always be from current entity.
+         * @description A property input. If entity_id is null, the input will always be from current entity or entities
+         *     filtered by supplied `entities_filter` if any.
+         *     Alternatively inputs can be filtered from a remote project by specifying `via_property_id` which
+         *     points to a `reference` property that acts as selector of entities from remote project.
          *
          */
         "Projects.PropertyInput": {
+            entities_filter?: components["schemas"]["EntityFilters.Filter"];
             entity_id?: components["schemas"]["Common.NullableUUID"];
             property_id: components["schemas"]["Common.UUID"];
+            via_property_id?: components["schemas"]["Common.NullableUUID"];
         };
         /**
          * Library.ListEntitiesResponse
@@ -1856,17 +2507,12 @@ export interface components {
          * @example image/png
          * @enum {string}
          */
-        "Common.MimeType": "application/json" | "application/pdf" | "audio/mp4" | "audio/mpeg" | "audio/ogg" | "audio/wav" | "audio/x-flac" | "image/bmp" | "image/gif" | "image/jpeg" | "image/png" | "image/tiff" | "image/webp" | "text/csv" | "text/html" | "text/markdown" | "text/plain" | "video/mp4" | "video/mpeg" | "video/webm";
-        /**
-         * WorkspaceInvitations.Role
-         * @enum {string}
-         */
-        "WorkspaceInvitations.Role": "admin" | "worker";
+        "Common.MimeType": "application/json" | "application/pdf" | "audio/mp4" | "audio/mpeg" | "audio/ogg" | "audio/wav" | "audio/x-flac" | "image/bmp" | "image/gif" | "image/jpeg" | "image/png" | "image/tiff" | "image/webp" | "text/csv" | "text/html" | "text/markdown" | "text/plain" | "video/mp4" | "video/mpeg" | "video/webm" | "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" | "application/msword" | "application/vnd.openxmlformats-officedocument.wordprocessingml.document";
         /**
          * Tools.Integrations.IntegrationName
          * @enum {string}
          */
-        "Tools.Integrations.IntegrationName": "open_ai" | "google_ai" | "azure_open_ai" | "anthropic" | "mistral" | "bing_search" | "azure_ocr" | "internal" | "fire_crawl" | "amazon_textract";
+        "Tools.Integrations.IntegrationName": "open_ai" | "google_ai" | "bing_search" | "azure_ocr" | "internal" | "fire_crawl" | "amazon_textract" | "azure_open_ai" | "anthropic" | "vertex_ai_claude" | "perplexity";
         /**
          * Projects.UpdateMultiSelectPropertyConfig
          * @description Select property configuration.
@@ -1882,7 +2528,7 @@ export interface components {
              *
              * @default []
              */
-            remove_options: string[];
+            remove_options?: string[];
             /**
              * @description Add or update select options.
              *     If the value already exists, it will be updated either with new color, or new value text.
@@ -1891,9 +2537,10 @@ export interface components {
              *
              * @default []
              */
-            upsert_options: {
+            upsert_options?: {
                 color?: components["schemas"]["Projects.SelectOptionColor"];
                 new_value?: string | null;
+                tool_fallback?: boolean | null;
                 value: string;
             }[];
         };
@@ -1920,6 +2567,18 @@ export interface components {
             total_count: components["schemas"]["Pagination.TotalCount"];
         };
         /**
+         * PropertyAllOf
+         * @description Matches items based on whether the all the values in the filter exist in the subject
+         */
+        PropertyAllOf: {
+            /** @enum {string} */
+            name: "property_all_of";
+            property_id: components["schemas"]["Common.UUID"];
+            /** @default false */
+            reference_support?: boolean;
+            values: string[];
+        };
+        /**
          * Billing.ListPlansResponse
          * @description Shows current plans for a workspace
          */
@@ -1932,6 +2591,33 @@ export interface components {
              *     Can be used to render configured limits for any self-serve plan.
              *      */
             templates: components["schemas"]["Billing.PlanTemplate"][];
+        };
+        /**
+         * PropertySimilarTo
+         * @description Matches items based on whether the values from the subject entity on specific property
+         *     are similar to the one specified in the filter.
+         *
+         */
+        PropertySimilarTo: {
+            limit?: components["schemas"]["Matchers.Limit"];
+            /** @enum {string} */
+            name: "property_similar_to";
+            property_id: components["schemas"]["Common.UUID"];
+            /** @default false */
+            reference_support?: boolean;
+            score_threshold?: components["schemas"]["Matchers.ScoreThreshold"];
+            value: string;
+        };
+        /**
+         * Invitations.InvitedUserError
+         * @description Invited user error
+         */
+        "Invitations.InvitedUserError": {
+            email: components["schemas"]["Common.Email"];
+            error_message: string;
+            role: components["schemas"]["Invitations.Role"];
+            /** @enum {string} */
+            state: "error";
         };
         /** Billing.UsageLimitWithUsage */
         "Billing.UsageLimitWithUsage": {
@@ -1950,6 +2636,32 @@ export interface components {
             type: "text" | "json";
         };
         /**
+         * AskGo.MessageMetadata
+         * @description Message metadata
+         */
+        "AskGo.MessageMetadata": {
+            /**
+             * @description The user score of the message. 1 for positive ("thumbsup"), -1 for negative ("thumbsdown").
+             *     Set to 'null' to reset the value.
+             *
+             * @enum {integer|null}
+             */
+            score?: 1 | -1 | null;
+        };
+        /**
+         * Users.ResourceEffectiveMemberResponse
+         * @description A member of a resource
+         */
+        "Users.ResourceEffectiveMemberResponse": {
+            /** @description Additional conditions for the permissions. If condition is present for any given permission, the permission is only effective if all the conditions are met.
+             *      */
+            conditions: components["schemas"]["Users.PermissionCondition"][];
+            permissions: ("use_ask_go" | "create_projects" | "update_projects" | "delete_projects" | "update_workspaces" | "delete_workspaces" | "invite_members" | "add_members" | "update_members" | "remove_members" | "update_entities" | "create_entities" | "delete_entities" | "recalculate_entities" | "manage_integrations" | "manage_properties" | "manage_views" | "manage_triggers" | "manage_billing" | "manage_tool_integrations" | "manage_project_exports" | "read_others" | "use_spaces")[];
+            /** @enum {string} */
+            role: "owner" | "admin" | "editor" | "worker" | "reader";
+            user: components["schemas"]["Users.UserResponse"];
+        };
+        /**
          * Projects.UpdateSingleSelectPropertyRequest
          * @description Update specified fields of a Property
          */
@@ -1959,10 +2671,27 @@ export interface components {
             /** @deprecated */
             input_ids?: components["schemas"]["Common.UUID"][] | null;
             inputs?: components["schemas"]["Projects.PropertyInput"][] | null;
+            is_grounded?: boolean;
             name: string;
             tool: components["schemas"]["Projects.Common.PropertyTool"];
             /** @enum {string} */
             type: "single_select";
+        };
+        /**
+         * TYPED_REFERENCE
+         * @description Update a field value request
+         */
+        TYPED_REFERENCE: {
+            reference: components["schemas"]["EntityFilters.NullableFilter"];
+        };
+        /** Spaces.ResultMessage */
+        "Spaces.ResultMessage": {
+            created_at: components["schemas"]["Common.DateTime"];
+            id: components["schemas"]["Common.UUID"];
+            results: components["schemas"]["Spaces.ResultData"][];
+            /** @enum {string} */
+            type: "result";
+            updated_at: components["schemas"]["Common.DateTime"];
         };
         /** Library.LibraryAttributesResponse */
         "Library.LibraryAttributesResponse": {
@@ -1972,6 +2701,21 @@ export interface components {
              * @example My Entity
              */
             name: string | null;
+        };
+        /**
+         * Projects.ListEntities.PDFVersion
+         * @description PDF version of the file
+         */
+        "Projects.ListEntities.PDFVersion": {
+            url: string;
+        };
+        /**
+         * TYPED_FILE_BASE64
+         * @description Update a field value request
+         */
+        TYPED_FILE_BASE64: {
+            file_base64: string;
+            file_name: string;
         };
         /**
          * Projects.ViewPropertyOptions
@@ -1990,6 +2734,20 @@ export interface components {
             source_indices: number[];
         };
         /**
+         * PropertyNoneOf
+         * @description Matches items based on whether the none of the values in the filter exist in the subject
+         */
+        PropertyNoneOf: {
+            /** @default true */
+            case_sensitive?: boolean;
+            /** @enum {string} */
+            name: "property_none_of";
+            property_id: components["schemas"]["Common.UUID"];
+            /** @default false */
+            reference_support?: boolean;
+            values: string[];
+        };
+        /**
          * Projects.RecalculateEntitiesRequest
          * @description Entity recalculate request
          */
@@ -1998,7 +2756,7 @@ export interface components {
              * @description When false, only stale fields will be recalculated.
              * @default false
              */
-            force: boolean;
+            force?: boolean;
             property_ids?: components["schemas"]["Projects.PropertyIdOrSlugList"];
         };
         /**
@@ -2032,13 +2790,17 @@ export interface components {
             entity_id: components["schemas"]["Common.UUID"];
             error_message: string | null;
             ground_truth: boolean;
+            indexing_error_message?: string | null;
+            indexing_status?: components["schemas"]["Projects.ListEntities.FieldStatus"];
+            manual_metadata?: components["schemas"]["Projects.ListEntities.FieldManualMetadataResponse"];
             manual_value: components["schemas"]["Projects.Entities.FieldValueResponse"];
             property_hash: string | null;
             property_id: components["schemas"]["Common.UUID"];
             property_type: components["schemas"]["Projects.Common.PropertyType"];
             status: components["schemas"]["Projects.ListEntities.FieldStatus"];
+            subproject_preview?: components["schemas"]["Projects.ListEntities.SubprojectPreviewResponse"];
             tool_error_message?: string | null;
-            tool_metadata?: components["schemas"]["Projects.ListEntities.FieldMetadataResponse"];
+            tool_metadata?: components["schemas"]["Projects.ListEntities.FieldToolMetadataResponse"];
             tool_status?: components["schemas"]["Projects.ListEntities.FieldStatus"];
             tool_value: components["schemas"]["Projects.Entities.FieldValueResponse"];
             updated_at: components["schemas"]["Common.DateTime"];
@@ -2049,9 +2811,20 @@ export interface components {
          */
         "Imports.FormatOptionsCSV": {
             /** @default false */
-            first_row_header: boolean;
+            first_row_header?: boolean;
             /** @enum {string} */
             separator: "," | ";" | "\t";
+        };
+        /**
+         * Users.ConditionManagedRole
+         * @description A condition restricting operations based on a role of a user that this operation relates to. Only listed roles can be affected by the operation.
+         *
+         */
+        "Users.ConditionManagedRole": {
+            /** @description List of roles that can be affected by the operation */
+            any_of: ("owner" | "admin" | "editor" | "worker" | "reader")[];
+            /** @enum {string} */
+            permission: "invite_members" | "add_members" | "update_members" | "remove_members";
         };
         /**
          * Projects.UpdateUserSelectPropertyRequest
@@ -2063,6 +2836,7 @@ export interface components {
             /** @deprecated */
             input_ids?: components["schemas"]["Common.UUID"][] | null;
             inputs?: components["schemas"]["Projects.PropertyInput"][] | null;
+            is_grounded?: boolean;
             name: string;
             tool: components["schemas"]["Projects.Common.PropertyTool"];
             /** @enum {string} */
@@ -2089,6 +2863,15 @@ export interface components {
         /** Imports.PrepareImportRequest */
         "Imports.PrepareImportRequest": components["schemas"]["Imports.PrepareImportRequestExistingProject"] | components["schemas"]["Imports.PrepareImportRequestNewProject"];
         /**
+         * NoneOf
+         * @description Matches items based on whether the values from the subject have none of the values specified in the filter
+         */
+        NoneOf: {
+            /** @enum {string} */
+            name: "none_of";
+            values: components["schemas"]["Common.UUID"][];
+        };
+        /**
          * Imports.ErrorDetails
          * @description Error details. When field has status `error`, this represents reason for that error.
          *     When field has status `complete`, this indicates that import wasn't processed in full due to
@@ -2101,13 +2884,22 @@ export interface components {
             message: string | null;
         } | null;
         /**
+         * ActivateViewId
+         * @description Filter entities based on active view id
+         */
+        ActivateViewId: {
+            matcher: components["schemas"]["AnyOf"] | components["schemas"]["NoneOf"];
+            /** @enum {string} */
+            subject: "active_view_id";
+        };
+        /**
          * AskGo.Action
          * @description Action
          */
         "AskGo.Action": {
             action: string;
             metadata: {
-                [key: string]: string | undefined;
+                [key: string]: string;
             };
         };
         /** Projects.PropertyLayoutSlug */
@@ -2128,6 +2920,7 @@ export interface components {
             /** @deprecated */
             input_ids?: components["schemas"]["Common.UUID"][] | null;
             inputs?: components["schemas"]["Projects.PropertyInput"][] | null;
+            is_grounded?: boolean;
             name: string;
             tool: components["schemas"]["Projects.Common.PropertyTool"];
             /** @enum {string} */
@@ -2142,12 +2935,28 @@ export interface components {
             sources: components["schemas"]["Projects.Grounding.Source"][];
         };
         /**
-         * WorkspaceInvitations.CreateInvitationResponse
-         * @description Create invitation response. Describes each created invitation (or an error if it failed)
+         * Projects.ListEntities.FieldReferenceResponse
+         * @description Response for a reference value
          */
-        "WorkspaceInvitations.CreateInvitationResponse": {
-            data: components["schemas"]["WorkspaceInvitations.InvitedUser"][];
+        "Projects.ListEntities.FieldReferenceResponse": {
+            matched_entity_ids: components["schemas"]["Common.UUID"][] | null;
+            updated_by: (components["schemas"]["Common.UUID"] | components["schemas"]["Projects.Common.PropertyTool"]) | null;
+            value: components["schemas"]["EntityFilters.NullableFilter"];
         };
+        /**
+         * Projects.MembershipInfo
+         * @description Project's membership information for the calling user
+         */
+        "Projects.MembershipInfo": {
+            /** @description Additional conditions for the permissions. If condition is present for any given permission, the permission is only effective if all the conditions are met.
+             *      */
+            conditions: components["schemas"]["Users.PermissionCondition"][];
+            permissions: ("use_ask_go" | "create_projects" | "update_projects" | "delete_projects" | "update_workspaces" | "delete_workspaces" | "invite_members" | "add_members" | "update_members" | "remove_members" | "update_entities" | "create_entities" | "delete_entities" | "recalculate_entities" | "manage_integrations" | "manage_properties" | "manage_views" | "manage_triggers" | "manage_billing" | "manage_tool_integrations" | "manage_project_exports" | "read_others" | "use_spaces")[];
+            /** @enum {string} */
+            role: "owner" | "admin" | "editor" | "worker" | "reader";
+        } | null;
+        /** EntityFilters.NullableOrEmptyObject */
+        "EntityFilters.NullableOrEmptyObject": Record<string, never>;
         /**
          * TYPED_FILE_URL
          * @description Update a field value request
@@ -2158,12 +2967,12 @@ export interface components {
         };
         /**
          * Projects.ListEntities.ListEntitiesOrderBy
-         * @description List of field names to order by
+         * @description List of property slugs/ids to order by
          * @example [
          *       "id"
          *     ]
          */
-        "Projects.ListEntities.ListEntitiesOrderBy": "id"[] | null;
+        "Projects.ListEntities.ListEntitiesOrderBy": (components["schemas"]["Common.UUID"] | string)[] | null;
         /**
          * Projects.TablePropertyConfigResponse
          * @description Table property configuration
@@ -2177,6 +2986,8 @@ export interface components {
          * @description Clone project request
          */
         "Projects.CloneProjectRequest": {
+            /** @default true */
+            clone_entities?: boolean;
             name: string | null;
             template_id: components["schemas"]["Common.UUID"];
         };
@@ -2200,10 +3011,37 @@ export interface components {
             /** @deprecated */
             input_ids?: components["schemas"]["Common.UUID"][] | null;
             inputs?: components["schemas"]["Projects.PropertyInput"][] | null;
+            /** @default false */
+            is_grounded?: boolean;
             name: string;
             tool: components["schemas"]["Projects.Common.PropertyTool"];
             /** @enum {string} */
             type: "pdf";
+        };
+        /**
+         * Invitations.CreateInvitationRequest
+         * @description Create invitation request. Invites one or more users into a workspace
+         */
+        "Invitations.CreateInvitationRequest": {
+            invitations: components["schemas"]["Invitations.InviteUser"][];
+        };
+        /**
+         * Spaces.ListSpacesOrderBy
+         * @description List of field names to order by
+         * @example [
+         *       "name",
+         *       "updated_at"
+         *     ]
+         */
+        "Spaces.ListSpacesOrderBy": ("id" | "name" | "updated_at")[] | null;
+        /**
+         * FieldValueSemantics
+         * @description Filter entities based on field's value semantics (similarity search)
+         */
+        FieldValueSemantics: {
+            matcher: components["schemas"]["PropertySimilarTo"] | components["schemas"]["SimilarTo"];
+            /** @enum {string} */
+            subject: "field_value_semantics";
         };
         /**
          * Projects.UpdateBasicPropertyRequest
@@ -2214,10 +3052,27 @@ export interface components {
             /** @deprecated */
             input_ids?: components["schemas"]["Common.UUID"][] | null;
             inputs?: components["schemas"]["Projects.PropertyInput"][] | null;
+            is_grounded?: boolean;
             name: string;
             tool: components["schemas"]["Projects.Common.PropertyTool"];
             type: components["schemas"]["Projects.BasicPropertyType"];
         };
+        /** Spaces.ListSpacesResponse */
+        "Spaces.ListSpacesResponse": {
+            data: components["schemas"]["Spaces.Space"][];
+            metadata: components["schemas"]["Pagination.PageMetadata"];
+        };
+        /**
+         * EntityStatus
+         * @description Filter entities based on their fields status
+         */
+        EntityStatus: {
+            matcher: components["schemas"]["ViewAnyOfFieldStatuses"] | components["schemas"]["ViewNoneOfFieldStatuses"] | components["schemas"]["ViewAllOfFieldStatuses"];
+            /** @enum {string} */
+            subject: "entity_status";
+        };
+        /** Spaces.Message */
+        "Spaces.Message": components["schemas"]["Spaces.LogMessage"] | components["schemas"]["Spaces.QueryMessage"] | components["schemas"]["Spaces.ProgressMessage"] | components["schemas"]["Spaces.ResultMessage"];
         /**
          * Projects.StartFileUploadRequest
          * @description Request for a URL for a file upload for a field
@@ -2240,10 +3095,17 @@ export interface components {
          */
         "Projects.BasicPropertyType": "text" | "file" | "json" | "url";
         /**
+         * Projects.Entities.AudioTranscription
+         * @description Transcription of an audio file
+         */
+        "Projects.Entities.AudioTranscription": {
+            text: string;
+        };
+        /**
          * Projects.SetFieldValueRequest
          * @description Set a field value request
          */
-        "Projects.SetFieldValueRequest": components["schemas"]["Projects.SetFieldValueArrayRequest"] | components["schemas"]["Projects.SetFieldValueFromTextRequest"];
+        "Projects.SetFieldValueRequest": components["schemas"]["Projects.SetFieldValueArrayRequest"] | components["schemas"]["Projects.SetFieldValueFromTextRequest"] | components["schemas"]["Projects.SetFieldValueReferenceRequest"];
         /**
          * Projects.Entities.FieldSelectResponse
          * @description Response for a select value
@@ -2252,6 +3114,21 @@ export interface components {
             raw_text: string | null;
             updated_by: (components["schemas"]["Common.UUID"] | components["schemas"]["Projects.Common.PropertyTool"]) | null;
             value: string[] | null;
+        };
+        /**
+         * Projects.ListEntities.FieldManualMetadataResponse
+         * @description Metadata of the value of a field. All fields are optional.
+         */
+        "Projects.ListEntities.FieldManualMetadataResponse": {
+            /** @description Custom name of collection field. */
+            field_name?: string | null;
+            /**
+             * @description Used to mark if the fields value is useful or not (commenting on the quality of it).
+             *     Use value '1' as "thumbs-up" or '-1" as "thumbs-down".
+             *
+             * @enum {integer|null}
+             */
+            value_score?: -1 | 1 | null;
         };
         /**
          * Projects.PropertyLayout
@@ -2264,7 +3141,7 @@ export interface components {
          */
         "Imports.Settings": {
             /** @default true */
-            billing_errors_as_warnings: boolean;
+            billing_errors_as_warnings?: boolean;
             entity_limit?: number | null;
         } | null;
         /**
@@ -2272,6 +3149,34 @@ export interface components {
          * @enum {string}
          */
         "Billing.LimitType": "hard" | "soft";
+        /**
+         * Projects.ProjectType
+         * @default regular
+         * @enum {string}
+         */
+        "Projects.ProjectType": "regular" | "agentic_search" | "integrated";
+        /** Spaces.DataProjectId */
+        "Spaces.DataProjectId": {
+            project_id: components["schemas"]["Common.UUID"];
+            /** @enum {string} */
+            type: "project_id";
+        };
+        /**
+         * Invitations.ProjectInvitation
+         * @description A project invitation
+         */
+        "Invitations.ProjectInvitation": {
+            email: string;
+            expires_at: components["schemas"]["Common.DateTime"];
+            id: components["schemas"]["Common.UUID"];
+            invite_url: string;
+            project_id: components["schemas"]["Common.UUID"];
+            role: components["schemas"]["Invitations.Role"];
+            /** @enum {string} */
+            status: "pending" | "expired" | "accepted";
+            workspace_id: components["schemas"]["Common.UUID"];
+            workspace_role: components["schemas"]["Invitations.Role"];
+        };
         /**
          * Projects.Grounding.BoundingBox
          * @description Bounding box for a grounding source
@@ -2290,7 +3195,7 @@ export interface components {
          * @example png
          * @enum {string}
          */
-        "Common.FileExtension": "jpg" | "png" | "bmp" | "pdf" | "jpeg" | "gif" | "tiff" | "webp" | "txt" | "csv" | "md" | "html" | "json";
+        "Common.FileExtension": "jpg" | "png" | "bmp" | "pdf" | "jpeg" | "gif" | "tiff" | "webp" | "txt" | "csv" | "md" | "html" | "json" | "xlsx" | "doc" | "docx";
         /**
          * Projects.Entities.FieldFileResponse
          * @description Response for a file value
@@ -2298,8 +3203,17 @@ export interface components {
         "Projects.Entities.FieldFileResponse": {
             ocr_pages?: components["schemas"]["Projects.Entities.OCRPage"][];
             original_filename: string | null;
+            pdf?: components["schemas"]["Projects.ListEntities.PDFVersion"];
+            transcription?: components["schemas"]["Projects.Entities.AudioTranscription"];
             updated_by: (components["schemas"]["Common.UUID"] | components["schemas"]["Projects.Common.PropertyTool"]) | null;
             value: string | null;
+        };
+        /**
+         * Projects.SetFieldValueReferenceRequest
+         * @description Set a field value request with entity filter based values
+         */
+        "Projects.SetFieldValueReferenceRequest": {
+            value: components["schemas"]["EntityFilters.Filter"];
         };
         /**
          * Projects.Grounding.Location
@@ -2363,6 +3277,8 @@ export interface components {
                 default_option?: components["schemas"]["Projects.SelectDefaultOption"];
                 options?: {
                     color?: components["schemas"]["Projects.SelectOptionColor"];
+                    /** @default false */
+                    tool_fallback?: boolean;
                     value: string;
                 }[];
             };
@@ -2371,11 +3287,18 @@ export interface components {
             /** @deprecated */
             input_ids?: components["schemas"]["Common.UUID"][] | null;
             inputs?: components["schemas"]["Projects.PropertyInput"][] | null;
+            /** @default false */
+            is_grounded?: boolean;
             name: string;
             tool: components["schemas"]["Projects.Common.PropertyTool"];
             /** @enum {string} */
             type: "user_select";
         };
+        /**
+         * Matchers.Limit
+         * @default 100
+         */
+        "Matchers.Limit": number;
         /**
          * Projects.UpdatePDFPropertyRequest
          * @description Update specified fields of a Property
@@ -2390,6 +3313,7 @@ export interface components {
             /** @deprecated */
             input_ids?: components["schemas"]["Common.UUID"][] | null;
             inputs?: components["schemas"]["Projects.PropertyInput"][] | null;
+            is_grounded?: boolean;
             name: string;
             tool: components["schemas"]["Projects.Common.PropertyTool"];
             /** @enum {string} */
@@ -2429,8 +3353,34 @@ export interface components {
             value: string | null;
         };
         /**
+         * Projects.AddReferencePropertyRequest
+         * @description Add property request
+         */
+        "Projects.AddReferencePropertyRequest": {
+            /** @description Initial configuration for reference property.
+             *     Allows to provide source project and entity limit (0 for to use system maximum).
+             *      */
+            config: {
+                entity_limit: components["schemas"]["Projects.ReferenceEntityLimit"];
+                project_id: components["schemas"]["Common.UUID"];
+            };
+            default_view_id?: components["schemas"]["Common.UUID"];
+            description: string | null;
+            /** @deprecated */
+            input_ids?: components["schemas"]["Common.UUID"][] | null;
+            inputs?: components["schemas"]["Projects.PropertyInput"][] | null;
+            /** @default false */
+            is_grounded?: boolean;
+            name: string;
+            tool: components["schemas"]["Projects.Common.PropertyTool"];
+            /** @enum {string} */
+            type: "reference";
+        };
+        /**
          * Projects.CreateEntityRequest
-         * @description Create entity request
+         * @description Create entity request.
+         *     For collections, the `parent_entity_id` is required and has to be set to entity of a parent project.
+         *
          */
         "Projects.CreateEntityRequest": {
             /**
@@ -2439,16 +3389,9 @@ export interface components {
              *             Fields not mentioned are going to be set to an empty value.
              */
             fields?: {
-                [key: string]: components["schemas"]["field_value"] | undefined;
+                [key: string]: components["schemas"]["field_value"];
             };
-        };
-        /**
-         * WorkspaceInvitations.ListInvitationsResponse
-         * @description List invitations response
-         */
-        "WorkspaceInvitations.ListInvitationsResponse": {
-            data: components["schemas"]["WorkspaceInvitations.WorkspaceInvitationResponse"][];
-            metadata: components["schemas"]["Pagination.PageMetadata"];
+            parent_entity_id?: components["schemas"]["Common.NullableUUID"];
         };
         /**
          * Common.DateTime
@@ -2464,13 +3407,10 @@ export interface components {
         "Tools.Integrations.ToolIntegrationsResponse": {
             data?: components["schemas"]["Tools.Integrations.Integration"][];
         };
-        /**
-         * WorkspaceInvitations.CreateInvitationRequest
-         * @description Create invitation request. Invites one or more users into a workspace
-         */
-        "WorkspaceInvitations.CreateInvitationRequest": {
-            invitations: components["schemas"]["WorkspaceInvitations.InviteUser"][];
-        };
+        /** Integrations.StartConnectionResponse */
+        "Integrations.StartConnectionResponse": components["schemas"]["Integrations.InvalidStartConfigResponse"] | components["schemas"]["Integrations.StartedConnectionResponse"];
+        /** Projects.ListEntities.SubprojectPreviewResponse */
+        "Projects.ListEntities.SubprojectPreviewResponse": components["schemas"]["Projects.ListEntities.CollectionPreview"];
         /**
          * AskGo.Message
          * @description Message
@@ -2478,8 +3418,10 @@ export interface components {
         "AskGo.Message": {
             actions?: components["schemas"]["AskGo.Action"][];
             author_id: components["schemas"]["Common.NullableUUID"];
+            files_uploaded: number;
             id: components["schemas"]["Common.UUID"];
-            text: string;
+            metadata: components["schemas"]["AskGo.MessageMetadata"];
+            text: string | null;
             timestamp: components["schemas"]["Common.DateTime"];
         };
         /**
@@ -2493,7 +3435,7 @@ export interface components {
          * Tools.KeyManager.Integration
          * @enum {string}
          */
-        "Tools.KeyManager.Integration": "open_ai" | "google_ai" | "azure_open_ai" | "anthropic" | "mistral" | "bing_search" | "azure_ocr" | "internal" | "fire_crawl" | "amazon_textract";
+        "Tools.KeyManager.Integration": "open_ai" | "google_ai" | "bing_search" | "azure_ocr" | "internal" | "fire_crawl" | "amazon_textract" | "azure_open_ai" | "anthropic" | "vertex_ai_claude" | "perplexity";
         /**
          * Projects.ListEntities.FieldSelectResponse
          * @description Response for a select value
@@ -2502,6 +3444,13 @@ export interface components {
             raw_text: string | null;
             updated_by: (components["schemas"]["Common.UUID"] | components["schemas"]["Projects.Common.PropertyTool"]) | null;
             value: string[] | null;
+        };
+        /** Common.NullableString */
+        "Common.NullableString": string | null;
+        /** Spaces.DoQuery */
+        "Spaces.DoQuery": {
+            data: components["schemas"]["Spaces.QueryData"][];
+            query: string;
         };
         /**
          * Imports.ListImportsResponse
@@ -2519,6 +3468,11 @@ export interface components {
          *     ]
          */
         "ApiKeys.ListApiKeysOrderBy": "id"[] | null;
+        /** Spaces.ListMessagesResponse */
+        "Spaces.ListMessagesResponse": {
+            data: components["schemas"]["Spaces.Message"][];
+            metadata: components["schemas"]["Pagination.PageMetadata"];
+        };
         /**
          * Exports.ListExportsOrderBy
          * @description List of field names to order by
@@ -2528,6 +3482,11 @@ export interface components {
          */
         "Exports.ListExportsOrderBy": "id"[] | null;
         /**
+         * Invitations.Role
+         * @enum {string}
+         */
+        "Invitations.Role": "admin" | "editor" | "worker" | "reader";
+        /**
          * Projects.ProjectCoverImageURLs
          * @description Project's cover image URLs
          */
@@ -2536,15 +3495,14 @@ export interface components {
             low: components["schemas"]["Common.URL"];
         };
         /**
-         * WorkspaceInvitations.InvitedUserError
-         * @description Invited user error
+         * Integrations.NotStartedConnectionResponse
+         * @description A not started connection.
          */
-        "WorkspaceInvitations.InvitedUserError": {
-            email: components["schemas"]["Common.Email"];
-            error_message: string;
-            role: components["schemas"]["WorkspaceInvitations.Role"];
-            /** @enum {string} */
-            state: "error";
+        "Integrations.NotStartedConnectionResponse": {
+            id: components["schemas"]["Common.UUID"];
+            integration_id: components["schemas"]["Integrations.IntegrationId"];
+            status: components["schemas"]["Integrations.ConnectionStatus"];
+            user_id: components["schemas"]["Common.UUID"];
         };
         /** Library.InputReference */
         "Library.InputReference": {
@@ -2558,12 +3516,13 @@ export interface components {
         "Projects.UpdateViewRequest": {
             assignable_property_id?: components["schemas"]["Common.NullableUUID"];
             /** @default [] */
-            filters: components["schemas"]["Projects.ViewFilter"][];
+            filters?: components["schemas"]["Projects.ViewFilter"][];
             name?: string;
+            num_pinned_properties?: components["schemas"]["Common.NonNegativeInteger"];
             property_ids: components["schemas"]["Projects.PropertyIdOrSlugList"];
             property_layouts: components["schemas"]["Projects.PropertyLayout"][];
             /** @default [] */
-            property_options: components["schemas"]["Projects.ViewPropertyOptions"][];
+            property_options?: components["schemas"]["Projects.ViewPropertyOptions"][];
         };
         /**
          * Projects.ListEntities.ListEntitiesResponse
@@ -2574,10 +3533,47 @@ export interface components {
             metadata: components["schemas"]["Pagination.PageMetadata"];
         };
         /**
+         * PropertyAnyOf
+         * @description Matches items based on whether the values from the subject are in the values specified in the filter
+         */
+        PropertyAnyOf: {
+            /** @default true */
+            case_sensitive?: boolean;
+            /** @enum {string} */
+            name: "property_any_of";
+            property_id: components["schemas"]["Common.UUID"];
+            /** @default false */
+            reference_support?: boolean;
+            values: string[];
+        };
+        /**
+         * Users.AddMemberRequest
+         * @description Adds a user to a resource
+         */
+        "Users.AddMemberRequest": {
+            /** @enum {string} */
+            role: "admin" | "editor" | "worker" | "reader";
+        };
+        /**
          * Projects.ListEntities.FieldValueResponse
          * @description Response for a field value
          */
-        "Projects.ListEntities.FieldValueResponse": components["schemas"]["Projects.ListEntities.FieldFileResponse"] | components["schemas"]["Projects.ListEntities.FieldTextResponse"] | components["schemas"]["Projects.ListEntities.FieldSelectResponse"];
+        "Projects.ListEntities.FieldValueResponse": components["schemas"]["Projects.ListEntities.FieldFileResponse"] | components["schemas"]["Projects.ListEntities.FieldTextResponse"] | components["schemas"]["Projects.ListEntities.FieldSelectResponse"] | components["schemas"]["Projects.ListEntities.FieldReferenceResponse"];
+        /**
+         * Matchers.ScoreThreshold
+         * @default 0.9
+         */
+        "Matchers.ScoreThreshold": number;
+        /**
+         * Integrations.InvalidStartConfigResponse
+         * @description Integrator requires specific configuration for the connection to start.
+         */
+        "Integrations.InvalidStartConfigResponse": {
+            details?: {
+                [key: string]: unknown;
+            };
+            message?: string;
+        };
         /**
          * Imports.ListImportsOrderBy
          * @description List of field names to order by.
@@ -2594,23 +3590,6 @@ export interface components {
          */
         "Common.NullableURL": string | null;
         /**
-         * EntityFilters.ActivateViewId
-         * @description Filter entities based on active view id
-         */
-        "EntityFilters.ActivateViewId": {
-            matcher: {
-                /** @enum {string} */
-                name: "any_of";
-                values: components["schemas"]["Common.UUID"][];
-            } | {
-                /** @enum {string} */
-                name: "none_of";
-                values: components["schemas"]["Common.UUID"][];
-            };
-            /** @enum {string} */
-            subject: "active_view_id";
-        };
-        /**
          * Tools.KeyManager.SecretValue
          * @description The secret value for the Tool's credential.
          *     In most cases this is just an ApiKey or similar.
@@ -2624,6 +3603,8 @@ export interface components {
          * @enum {string}
          */
         "Billing.PlanStatus": "active" | "canceled" | "pending_checkout" | "pending_payment" | "available";
+        /** Users.MemberId */
+        "Users.MemberId": components["schemas"]["Common.UUID"] | ("anyone_in_folder" | "anyone_in_workspace");
         /**
          * Pagination.Limit
          * @description The maximum number of records to return when using `offset` pagination
@@ -2658,11 +3639,13 @@ export interface components {
          */
         "Projects.ProjectResponse": {
             cover_image_urls: components["schemas"]["Projects.ProjectCoverImageURLs"];
+            created_at: components["schemas"]["Common.DateTime"];
             id: components["schemas"]["Common.UUID"];
             main_view_id: components["schemas"]["Common.NullableUUID"];
             name: string | null;
             parent_property: components["schemas"]["Projects.PropertyResponse"] | null;
             properties: components["schemas"]["Projects.PropertyResponse"][];
+            updated_at: components["schemas"]["Common.DateTime"];
             views: components["schemas"]["Projects.ViewResponse"][];
             workspace_id: components["schemas"]["Common.UUID"];
         };
@@ -2670,7 +3653,7 @@ export interface components {
          * Projects.Common.PropertyType
          * @enum {string}
          */
-        "Projects.Common.PropertyType": "single_select" | "multi_select" | "user_select" | "text" | "file" | "json" | "pdf" | "collection" | "url";
+        "Projects.Common.PropertyType": "single_select" | "multi_select" | "user_select" | "text" | "file" | "json" | "pdf" | "collection" | "file_collection" | "url" | "reference";
         /**
          * Projects.StartFileUploadResponse
          * @description URL to upload a file for a field.
@@ -2685,19 +3668,67 @@ export interface components {
          */
         "Library.ProjectResponse": {
             cover_image_urls: components["schemas"]["Projects.ProjectCoverImageURLs"];
+            created_at: components["schemas"]["Common.DateTime"];
             id: components["schemas"]["Common.UUID"];
             main_view_id: components["schemas"]["Common.NullableUUID"];
             name: string | null;
             parent_property: components["schemas"]["Projects.PropertyResponse"] | null;
             properties: components["schemas"]["Projects.PropertyResponse"][];
+            updated_at: components["schemas"]["Common.DateTime"];
             views: components["schemas"]["Projects.ViewResponse"][];
             workspace_id: components["schemas"]["Common.UUID"];
+        };
+        /**
+         * FieldMetadataFieldName
+         * @description Filter entities based on field's custom field name
+         */
+        FieldMetadataFieldName: {
+            matcher: components["schemas"]["PropertyAnyOf"] | components["schemas"]["PropertyNoneOf"] | components["schemas"]["PropertyContainsAnyOf"] | components["schemas"]["PropertyContainsNoneOf"];
+            /** @enum {string} */
+            subject: "field_metadata_field_name";
+        };
+        /**
+         * Invitations.InviteUser
+         * @description Object describing a user to invite to a workspace
+         */
+        "Invitations.InviteUser": {
+            email: components["schemas"]["Common.Email"];
+            role: components["schemas"]["Invitations.Role"];
+        };
+        /**
+         * Projects.SetFieldMetadataRequest
+         * @description Set a field metadata request
+         */
+        "Projects.SetFieldMetadataRequest": {
+            value: components["schemas"]["Projects.Common.FieldManualMetadata"];
         };
         /**
          * Workspaces.WorkspaceDisabled
          * @description Whether the workspace is disabled
          */
         "Workspaces.WorkspaceDisabled": boolean;
+        /**
+         * SimilarTo
+         * @description Matches items based on whether any of the values from the subject entity are similar to the one specified in the filter.
+         *
+         */
+        SimilarTo: {
+            limit?: components["schemas"]["Matchers.Limit"];
+            /** @enum {string} */
+            name: "similar_to";
+            score_threshold?: components["schemas"]["Matchers.ScoreThreshold"];
+            value: string;
+        };
+        /** Spaces.ResultData */
+        "Spaces.ResultData": components["schemas"]["Spaces.DataProjectId"] | components["schemas"]["Spaces.DataText"];
+        /**
+         * Invitations.OrderBy
+         * @description List of field names to order by
+         * @example [
+         *       "id"
+         *     ]
+         */
+        "Invitations.OrderBy": "id"[] | null;
         /**
          * Projects.ListPropertiesResponse
          * @description A list of properties
@@ -2706,10 +3737,31 @@ export interface components {
             data?: components["schemas"]["Projects.PropertyResponse"][];
         };
         /**
+         * Invitations.InvitedUserSuccess
+         * @description Invited user success
+         */
+        "Invitations.InvitedUserSuccess": {
+            email: components["schemas"]["Common.Email"];
+            id?: components["schemas"]["Common.UUID"];
+            invite_url: string;
+            role: components["schemas"]["Invitations.Role"];
+            /** @enum {string} */
+            state?: "success";
+        };
+        /**
          * Projects.Entities.FieldValueResponse
          * @description Response for a field value
          */
-        "Projects.Entities.FieldValueResponse": components["schemas"]["Projects.Entities.FieldFileResponse"] | components["schemas"]["Projects.Entities.FieldTextResponse"] | components["schemas"]["Projects.Entities.FieldSelectResponse"];
+        "Projects.Entities.FieldValueResponse": components["schemas"]["Projects.Entities.FieldFileResponse"] | components["schemas"]["Projects.Entities.FieldTextResponse"] | components["schemas"]["Projects.Entities.FieldSelectResponse"] | components["schemas"]["Projects.Entities.FieldReferenceResponse"];
+        /**
+         * ParentEntityId
+         * @description Filter entities based on parent entity id
+         */
+        ParentEntityId: {
+            matcher: components["schemas"]["AnyOf"] | components["schemas"]["NoneOf"];
+            /** @enum {string} */
+            subject: "parent_entity_id";
+        };
         /**
          * TYPED_SELECT
          * @description Update a field value request for properties with array values
@@ -2726,11 +3778,41 @@ export interface components {
             enabled: boolean;
             integration: components["schemas"]["Tools.Integrations.IntegrationName"];
         };
+        /** Spaces.QueryMessage */
+        "Spaces.QueryMessage": {
+            created_at: components["schemas"]["Common.DateTime"];
+            data: components["schemas"]["Spaces.QueryData"][];
+            id: components["schemas"]["Common.UUID"];
+            query: string;
+            /** @enum {string} */
+            type: "query";
+            updated_at: components["schemas"]["Common.DateTime"];
+            user_id: components["schemas"]["Common.UUID"];
+        };
         /**
          * Imports.Format
          * @enum {string}
          */
         "Imports.Format": "csv";
+        /**
+         * Invitations.WorkspaceInvitationVerifyResponse
+         * @description Workspace invitation verification response
+         */
+        "Invitations.WorkspaceInvitationVerifyResponse": {
+            expires_at: components["schemas"]["Common.DateTime"];
+            /** @enum {string} */
+            status: "pending" | "expired";
+        };
+        /**
+         * TextValue
+         * @deprecated
+         * @description DEPRECATED: Use FieldTextValue instead
+         */
+        TextValue: {
+            matcher: components["schemas"]["PropertyAnyOf"] | components["schemas"]["PropertyNoneOf"] | components["schemas"]["PropertyContainsAnyOf"] | components["schemas"]["PropertyContainsNoneOf"];
+            /** @enum {string} */
+            subject: "text_value";
+        };
         /**
          * Projects.Entities.EntityResponse
          * @description An entity
@@ -2738,7 +3820,7 @@ export interface components {
         "Projects.Entities.EntityResponse": {
             active_view_ids?: components["schemas"]["Common.UUID"][];
             fields: {
-                [key: string]: components["schemas"]["Projects.Entities.FieldResponse"] | undefined;
+                [key: string]: components["schemas"]["Projects.Entities.FieldResponse"];
             };
             id: components["schemas"]["Common.UUID"];
             parent_entity_id?: components["schemas"]["Common.NullableUUID"];
@@ -2762,10 +3844,34 @@ export interface components {
             /** @deprecated */
             input_ids?: components["schemas"]["Common.UUID"][] | null;
             inputs?: components["schemas"]["Projects.PropertyInput"][] | null;
+            /** @default false */
+            is_grounded?: boolean;
             name: string;
             tool: components["schemas"]["Projects.Common.PropertyTool"];
             type: components["schemas"]["Projects.BasicPropertyType"];
         };
+        /**
+         * Projects.Common.FieldManualMetadata
+         * @description Metadata of the value of a field. All fields are optional.
+         */
+        "Projects.Common.FieldManualMetadata": {
+            /** @description Custom name of collection field. */
+            field_name?: string | null;
+            /**
+             * @description Used to mark if the fields value is useful or not (commenting on the quality of it).
+             *     Use value '1' as "thumbs-up" or '-1" as "thumbs-down".
+             *
+             * @enum {integer|null}
+             */
+            value_score?: -1 | 1 | null;
+        };
+        /** Spaces.SystemMessage */
+        "Spaces.SystemMessage": components["schemas"]["Spaces.ProgressMessage"] | components["schemas"]["Spaces.ErrorMessage"];
+        /**
+         * Spaces.Status
+         * @enum {string}
+         */
+        "Spaces.Status": "running" | "success" | "error";
         /**
          * Tools.KeyManager.UpsertToolKeyRequest
          * @description Request to create or update a tool key.
@@ -2775,6 +3881,43 @@ export interface components {
             secret_project_id?: components["schemas"]["Tools.KeyManager.SecretProjectId"];
             secret_value: components["schemas"]["Tools.KeyManager.SecretValue"];
         };
+        /**
+         * Id
+         * @deprecated
+         * @description DEPRECATED: Use EntityId instead
+         */
+        Id: {
+            matcher: components["schemas"]["AnyOf"] | components["schemas"]["NoneOf"];
+            /** @enum {string} */
+            subject: "id";
+        };
+        /**
+         * ViewNoneOfFieldStatuses
+         * @description Matches items in a view based on whether none of their field statuses are in the filter values
+         */
+        ViewNoneOfFieldStatuses: {
+            /** @enum {string} */
+            name: "view_none_of";
+            values: components["schemas"]["Projects.ListEntities.FieldStatus"][];
+            view_id: components["schemas"]["Common.UUID"];
+        };
+        /**
+         * Integrations.ConnectSessionToken
+         * @description A session token that can be used to initiate provider authentication.
+         */
+        "Integrations.ConnectSessionToken": string;
+        /**
+         * Users.User
+         * @description A user
+         */
+        "Users.User": {
+            email?: string;
+            first_name?: string;
+            id: components["schemas"]["Common.UUID"];
+            last_name?: string;
+        };
+        /** Invitations.ProjectInvitationResponse */
+        "Invitations.ProjectInvitationResponse": components["schemas"]["Invitations.ProjectInvitation"];
         /**
          * Automations.ListAutomationsOrderBy
          * @description List of field names to order by
@@ -2792,31 +3935,32 @@ export interface components {
             metadata: components["schemas"]["Pagination.PageMetadata"];
         };
         /**
+         * Status
+         * @deprecated
+         * @description DEPRECATED: Use FieldStatus instead
+         */
+        Status: {
+            matcher: components["schemas"]["PropertyAnyOf"] | components["schemas"]["PropertyNoneOf"];
+            /** @enum {string} */
+            subject: "status";
+        };
+        /**
          * Projects.Common.PropertyTool
          * @enum {string}
          */
-        "Projects.Common.PropertyTool": "manual" | "dall_e_3" | "imagen" | "whisper" | "gpt_4" | "gpt_4o" | "gpt_3_5" | "gpt_4o_azure" | "gpt_3_5_azure" | "gpt_4o_grounded" | "go" | "gemini_pro" | "gemini_1_5_pro" | "gemini_1_5_flash" | "gemini_pro_vision" | "claude_3_opus" | "claude_3_5_sonnet" | "claude_3_sonnet" | "claude_3_haiku" | "mixtral_8x7b" | "mistral_large" | "bing_search" | "ocr" | "pdf_split" | "url_scrape" | "code" | "aws_ocr";
+        "Projects.Common.PropertyTool": "manual" | "dall_e_3" | "imagen" | "whisper" | "bing_search" | "ocr" | "url_scrape" | "http" | "code" | "aws_ocr" | "gpt_4" | "web_search" | "gpt_4o" | "gpt_4o_mini" | "o1" | "o1_mini" | "gpt_3_5" | "gpt_4o_azure" | "gpt_3_5_azure" | "go" | "gemini_pro" | "gemini_1_5_pro" | "gemini_1_5_flash" | "gemini_pro_vision" | "claude_3_opus" | "claude_3_5_sonnet" | "claude_3_sonnet" | "claude_3_haiku" | "claude_3_5_haiku" | "claude_3_5_sonnet_vertex_ai" | "claude_3_sonnet_vertex_ai" | "claude_3_haiku_vertex_ai" | "claude_3_5_haiku_vertex_ai" | "claude_3_opus_vertex_ai";
         /**
          * EntityFilters.SimpleFilter
          * @description Simple filter specifies rule that subject has to fulfill. Each simple filter consist of `subject` and `matcher`. Subject is name of property you want to filter on. For example if you want to filter by entity id you should specify {subject: 'entity_id'}. Next you have to specify matcher which defines how you would like to filer. If you are interested in any of entities within array of entity ids you should specify: {matcher: {name: 'any_of', values: [list of entity ids]}}
          */
-        "EntityFilters.SimpleFilter": components["schemas"]["EntityFilters.ActivateViewId"] | components["schemas"]["EntityFilters.EntityId"] | components["schemas"]["EntityFilters.SelectOptionValue"] | components["schemas"]["EntityFilters.ParentEntityId"] | components["schemas"]["EntityFilters.Status"];
+        "EntityFilters.SimpleFilter": components["schemas"]["ActivateViewId"] | components["schemas"]["EntityId"] | components["schemas"]["EntityStatus"] | components["schemas"]["FieldSelectOptionValue"] | components["schemas"]["FieldTextValue"] | components["schemas"]["ParentEntityId"] | components["schemas"]["FieldStatus"] | components["schemas"]["FieldFileName"] | components["schemas"]["FieldMetadataFieldName"] | components["schemas"]["FieldValueSemantics"] | components["schemas"]["Id"] | components["schemas"]["SelectOptionValue"] | components["schemas"]["TextValue"] | components["schemas"]["Status"];
         /**
-         * EntityFilters.ParentEntityId
-         * @description Filter entities based on parent entity id
+         * Projects.ListEntities.EntityPreview
+         * @description Preview of an entity
          */
-        "EntityFilters.ParentEntityId": {
-            matcher: {
-                /** @enum {string} */
-                name: "any_of";
-                values: components["schemas"]["Common.UUID"][];
-            } | {
-                /** @enum {string} */
-                name: "none_of";
-                values: components["schemas"]["Common.UUID"][];
-            };
-            /** @enum {string} */
-            subject: "parent_entity_id";
+        "Projects.ListEntities.EntityPreview": {
+            entity_id: components["schemas"]["Common.UUID"];
+            field_previews: components["schemas"]["Projects.ListEntities.FieldPreview"][];
         };
         /**
          * Common.NullableDateTime
@@ -2838,21 +3982,33 @@ export interface components {
          */
         "Projects.PropertySlug": string;
         /**
-         * WorkspaceInvitations.InvitedUser
-         * @description Invited user
+         * Projects.ReferencePropertyConfigResponse
+         * @description Reference property configuration
          */
-        "WorkspaceInvitations.InvitedUser": components["schemas"]["WorkspaceInvitations.InvitedUserSuccess"] | components["schemas"]["WorkspaceInvitations.InvitedUserError"];
+        "Projects.ReferencePropertyConfigResponse": {
+            entity_limit: components["schemas"]["Projects.ReferenceEntityLimit"];
+            project_id: components["schemas"]["Common.NullableUUID"];
+        };
         /**
-         * Projects.ListEntities.FieldMetadataResponse
-         * @description Response for a field metadata
+         * Integrations.ListConnectionsResponse
+         * @description List of connections and associated metadata.
          */
-        "Projects.ListEntities.FieldMetadataResponse": {
-            favicon?: {
-                url?: string;
-            };
-            screenshot?: {
-                url?: string;
-            };
+        "Integrations.ListConnectionsResponse": {
+            data: components["schemas"]["Integrations.ConnectionResponse"][];
+        };
+        /**
+         * PropertyContainsAnyOf
+         * @description Matches items based on whether the values from the subject contains the one specified in the filter
+         */
+        PropertyContainsAnyOf: {
+            /** @default true */
+            case_sensitive?: boolean;
+            /** @enum {string} */
+            name: "property_contains_any_of";
+            property_id: components["schemas"]["Common.UUID"];
+            /** @default false */
+            reference_support?: boolean;
+            values: string[];
         };
         /**
          * Billing.LimitName
@@ -2872,6 +4028,15 @@ export interface components {
             properties: components["schemas"]["Projects.Common.PropertyType"][];
         };
         /**
+         * Integrations.ConnectionStartSettings
+         * @description Settings required for the connection to start.
+         */
+        "Integrations.ConnectionStartSettings": {
+            integrator_config: {
+                [key: string]: unknown;
+            };
+        };
+        /**
          * Workspaces.WorkspaceResponse
          * @description A workspace
          */
@@ -2885,24 +4050,25 @@ export interface components {
             role?: components["schemas"]["Workspaces.WorkspaceRole"];
         };
         /**
-         * WorkspaceInvitations.OrderBy
-         * @description List of field names to order by
-         * @example [
-         *       "id"
-         *     ]
-         */
-        "WorkspaceInvitations.OrderBy": "id"[] | null;
-        /**
          * Tools.Integrations.ToolName
          * @enum {string}
          */
-        "Tools.Integrations.ToolName": "manual" | "dall_e_3" | "imagen" | "whisper" | "gpt_4" | "gpt_4o" | "gpt_3_5" | "gpt_4o_azure" | "gpt_3_5_azure" | "gpt_4o_grounded" | "go" | "gemini_pro" | "gemini_1_5_pro" | "gemini_1_5_flash" | "gemini_pro_vision" | "claude_3_opus" | "claude_3_5_sonnet" | "claude_3_sonnet" | "claude_3_haiku" | "mixtral_8x7b" | "mistral_large" | "bing_search" | "ocr" | "pdf_split" | "url_scrape" | "code" | "aws_ocr";
+        "Tools.Integrations.ToolName": "manual" | "dall_e_3" | "imagen" | "whisper" | "bing_search" | "ocr" | "pdf_convert" | "file_split" | "url_scrape" | "http" | "code" | "aws_ocr" | "gpt_4" | "web_search" | "gpt_4o" | "gpt_4o_mini" | "o1" | "o1_mini" | "gpt_3_5" | "gpt_4o_azure" | "gpt_3_5_azure" | "go" | "gemini_pro" | "gemini_1_5_pro" | "gemini_1_5_flash" | "gemini_pro_vision" | "claude_3_opus" | "claude_3_5_sonnet" | "claude_3_sonnet" | "claude_3_haiku" | "claude_3_5_haiku" | "claude_3_5_sonnet_vertex_ai" | "claude_3_sonnet_vertex_ai" | "claude_3_haiku_vertex_ai" | "claude_3_5_haiku_vertex_ai" | "claude_3_opus_vertex_ai" | "semantic_splitter" | "semantic_indexer";
+        /**
+         * Invitations.ListProjectInvitationsResponse
+         * @description List invitations response
+         */
+        "Invitations.ListProjectInvitationsResponse": {
+            data: components["schemas"]["Invitations.ProjectInvitationResponse"][];
+            metadata: components["schemas"]["Pagination.PageMetadata"];
+        };
         /**
          * Projects.SelectOptionResponse
          * @description Response for a select option
          */
         "Projects.SelectOptionResponse": {
             color?: components["schemas"]["Projects.SelectOptionColor"];
+            tool_fallback: boolean;
             value: string;
         };
         /**
@@ -2915,6 +4081,18 @@ export interface components {
         };
         /** Projects.SelectOptionColor */
         "Projects.SelectOptionColor": string | null;
+        /**
+         * Projects.NullableReferenceEntityLimit
+         * @description Maximum number of matched entities to reference. 0 value will use default system limit (1000).
+         */
+        "Projects.NullableReferenceEntityLimit": number | null;
+        /**
+         * Integrations.ConnectSessionResponse
+         * @description Connect session. Contains newly created connection ID and a connect session token
+         */
+        "Integrations.ConnectSessionResponse": {
+            connect_session_token: components["schemas"]["Integrations.ConnectSessionToken"];
+        };
         /**
          * Imports.PrepareImportRequestExistingProject
          * @description Prepare import request
@@ -2945,12 +4123,13 @@ export interface components {
         "Projects.CreateViewRequest": {
             assignable_property_id?: components["schemas"]["Common.NullableUUID"];
             /** @default [] */
-            filters: components["schemas"]["Projects.ViewFilter"][];
+            filters?: components["schemas"]["Projects.ViewFilter"][];
             name: string;
+            num_pinned_properties?: components["schemas"]["Common.NonNegativeInteger"];
             property_ids: components["schemas"]["Projects.PropertyIdOrSlugList"];
             property_layouts: components["schemas"]["Projects.PropertyLayout"][];
             /** @default [] */
-            property_options: components["schemas"]["Projects.ViewPropertyOptions"][];
+            property_options?: components["schemas"]["Projects.ViewPropertyOptions"][];
         };
         /**
          * EntityFilters.Filter
@@ -2980,16 +4159,10 @@ export interface components {
             signup_completed: boolean;
         };
         /**
-         * WorkspaceInvitations.InvitedUserSuccess
-         * @description Invited user success
+         * Common.NullableInteger
+         * @example 123
          */
-        "WorkspaceInvitations.InvitedUserSuccess": {
-            email: components["schemas"]["Common.Email"];
-            invite_url: string;
-            role: components["schemas"]["WorkspaceInvitations.Role"];
-            /** @enum {string} */
-            state?: "success";
-        };
+        "Common.NullableInteger": number | null;
         /** Billing.UsageLimits */
         "Billing.UsageLimits": components["schemas"]["Billing.UsageLimit"][];
         /**
@@ -3000,6 +4173,13 @@ export interface components {
          * @default 0
          */
         "Projects.SelectMaxSelectedWithDefault": number | null;
+        /**
+         * Invitations.AcceptInvitationRequest
+         * @description A request to accept workspece invitation
+         */
+        "Invitations.AcceptInvitationRequest": {
+            invite_token: string;
+        };
         /**
          * Projects.Grounding.Source
          * @description Grounding source information for the field
@@ -3056,8 +4236,20 @@ export interface components {
          * @description Create export request
          */
         "Exports.CreateExportRequest": {
+            format?: components["schemas"]["Exports.Format"];
             name: string;
         };
+        /**
+         * Projects.IncludeMembershipInfo
+         * @description Include membership information for the calling user
+         * @default false
+         */
+        "Projects.IncludeMembershipInfo": boolean;
+        /**
+         * EntityFilters.NullableFilter
+         * @description Filter can be `simple` or `group`. If you want to filter by one `subject` eg. `item name`. You can specify `simple filter` for given `subject` and `matcher`. For more details please see details of `item name filter` or other simple filters. If you want to to filter item by more than one filter You need to use `group filter` which gives possibility to join `filters` using `and`, `or` operators.
+         */
+        "EntityFilters.NullableFilter": components["schemas"]["EntityFilters.GroupFilter"] | components["schemas"]["EntityFilters.SimpleFilter"] | components["schemas"]["EntityFilters.NullableOrEmptyObject"];
         /**
          * Pagination.Cursor
          * @description A base64 encoded value representing a cursor, or an element ID if applicable
@@ -3070,6 +4262,16 @@ export interface components {
          */
         "Workspaces.CreateWorkspaceRequest": {
             name?: string;
+        };
+        /**
+         * ViewAnyOfFieldStatuses
+         * @description Matches items in a view based on whether any of their field statuses are in the filter values
+         */
+        ViewAnyOfFieldStatuses: {
+            /** @enum {string} */
+            name: "view_any_of";
+            values: components["schemas"]["Projects.ListEntities.FieldStatus"][];
+            view_id: components["schemas"]["Common.UUID"];
         };
         /**
          * Common.UUIDList
@@ -3100,6 +4302,7 @@ export interface components {
             last?: components["schemas"]["Pagination.Last"];
             limit?: components["schemas"]["Pagination.Limit"];
             offset?: components["schemas"]["Pagination.Offset"];
+            order_by?: components["schemas"]["Projects.ListEntities.ListEntitiesOrderBy"];
             order_directions?: components["schemas"]["Pagination.OrderDirections"];
         };
         /**
@@ -3126,6 +4329,8 @@ export interface components {
                 default_option?: components["schemas"]["Projects.SelectDefaultOption"];
                 options?: {
                     color?: components["schemas"]["Projects.SelectOptionColor"];
+                    /** @default false */
+                    tool_fallback?: boolean;
                     value: string;
                 }[];
             };
@@ -3134,6 +4339,8 @@ export interface components {
             /** @deprecated */
             input_ids?: components["schemas"]["Common.UUID"][] | null;
             inputs?: components["schemas"]["Projects.PropertyInput"][] | null;
+            /** @default false */
+            is_grounded?: boolean;
             name: string;
             tool: components["schemas"]["Projects.Common.PropertyTool"];
             /** @enum {string} */
@@ -3145,13 +4352,36 @@ export interface components {
          */
         "Projects.ViewResponse": {
             assignable_property_id: components["schemas"]["Common.NullableUUID"];
+            entity_count?: components["schemas"]["Common.NullableInteger"];
             filters: components["schemas"]["Projects.ViewFilter"][];
             id: components["schemas"]["Common.UUID"];
             name: string;
+            num_pinned_properties: components["schemas"]["Common.NonNegativeInteger"];
             project_id: components["schemas"]["Common.UUID"];
             property_ids: components["schemas"]["Common.UUIDList"];
             property_layouts: components["schemas"]["Projects.PropertyLayoutId"][];
             property_options?: components["schemas"]["Projects.ViewPropertyOptions"][];
+        };
+        /** Spaces.LogMessage */
+        "Spaces.LogMessage": {
+            created_at: components["schemas"]["Common.DateTime"];
+            data: {
+                [key: string]: unknown;
+            };
+            id: components["schemas"]["Common.UUID"];
+            message: string;
+            /** @enum {string} */
+            type: "log";
+            updated_at: components["schemas"]["Common.DateTime"];
+        };
+        /**
+         * FieldFileName
+         * @description Filter entities based on field's file name
+         */
+        FieldFileName: {
+            matcher: components["schemas"]["PropertyAnyOf"] | components["schemas"]["PropertyNoneOf"] | components["schemas"]["PropertyContainsAnyOf"] | components["schemas"]["PropertyContainsNoneOf"];
+            /** @enum {string} */
+            subject: "field_file_name";
         };
         /** Options */
         Options: string[];
@@ -3184,6 +4414,8 @@ export interface components {
                 max_selected?: components["schemas"]["Projects.SelectMaxSelectedWithDefault"];
                 options?: {
                     color?: components["schemas"]["Projects.SelectOptionColor"];
+                    /** @default false */
+                    tool_fallback?: boolean;
                     value: string;
                 }[];
             };
@@ -3192,6 +4424,8 @@ export interface components {
             /** @deprecated */
             input_ids?: components["schemas"]["Common.UUID"][] | null;
             inputs?: components["schemas"]["Projects.PropertyInput"][] | null;
+            /** @default false */
+            is_grounded?: boolean;
             name: string;
             tool: components["schemas"]["Projects.Common.PropertyTool"];
             /** @enum {string} */
@@ -3211,20 +4445,6 @@ export interface components {
          */
         "Imports.UploadUrlResponse": {
             upload_url: string;
-        };
-        /**
-         * EntityFilters.Status
-         * @description Filter entities based on a fields status
-         */
-        "EntityFilters.Status": {
-            matcher: {
-                /** @enum {string} */
-                name: "property_any_of";
-                property_id: components["schemas"]["Common.UUID"];
-                values: components["schemas"]["Projects.ListEntities.FieldStatus"][];
-            };
-            /** @enum {string} */
-            subject: "status";
         };
         /**
          * Pagination.PageSize
@@ -3251,7 +4471,7 @@ export interface components {
              *
              * @default []
              */
-            remove_properties: string[];
+            remove_properties?: string[];
             /**
              * @description Add or update properties.
              *     If the value already exists, it will be updated either with new type, or new name.
@@ -3259,7 +4479,7 @@ export interface components {
              *
              * @default []
              */
-            upsert_properties: {
+            upsert_properties?: {
                 name: string;
                 new_name?: string | null;
                 /** @enum {string|null} */
@@ -3275,6 +4495,13 @@ export interface components {
         "Projects.EntityBulkRemoveResponse": {
             entity_ids: components["schemas"]["Common.UUID"][];
             project_id: components["schemas"]["Common.UUID"];
+        };
+        /**
+         * Billing.ProjectUsageResponse
+         * @description Represents usage limits for a project
+         */
+        "Billing.ProjectUsageResponse": {
+            limits: components["schemas"]["Billing.UsageLimitsWithUsage"];
         };
         /**
          * TYPED_TEXT
@@ -3296,13 +4523,23 @@ export interface components {
          * @enum {string}
          */
         "EntityFilters.Conjunction": "and" | "or";
+        /**
+         * Projects.Entities.FieldReferenceResponse
+         * @description Response for a reference value
+         */
+        "Projects.Entities.FieldReferenceResponse": {
+            matched_entity_ids: components["schemas"]["Common.UUID"][] | null;
+            updated_by: (components["schemas"]["Common.UUID"] | components["schemas"]["Projects.Common.PropertyTool"]) | null;
+            value: components["schemas"]["EntityFilters.NullableFilter"];
+        };
         /** Projects.PropertyConfigResponse */
-        "Projects.PropertyConfigResponse": (components["schemas"]["Projects.SingleSelectPropertyConfigResponse"] | components["schemas"]["Projects.MultiSelectPropertyConfigResponse"] | components["schemas"]["Projects.PDFPropertyConfigResponse"] | components["schemas"]["Projects.TablePropertyConfigResponse"]) | null;
+        "Projects.PropertyConfigResponse": (components["schemas"]["Projects.SingleSelectPropertyConfigResponse"] | components["schemas"]["Projects.MultiSelectPropertyConfigResponse"] | components["schemas"]["Projects.PDFPropertyConfigResponse"] | components["schemas"]["Projects.TablePropertyConfigResponse"] | components["schemas"]["Projects.ReferencePropertyConfigResponse"]) | null;
         /**
          * Tools.Integrations.Tool
          * @description Tool integration state.
          */
         "Tools.Integrations.Tool": {
+            grounding: components["schemas"]["Tools.Integrations.GroundingFeature"] | null;
             supported_inputs: components["schemas"]["Tools.Integrations.SupportedInputs"];
             supported_outputs: components["schemas"]["Tools.Integrations.SupportedOutputs"];
             tool: components["schemas"]["Tools.Integrations.ToolName"];
@@ -3318,6 +4555,8 @@ export interface components {
             user_id?: components["schemas"]["Common.UUID"];
             workspace_id?: components["schemas"]["Common.UUID"];
         };
+        /** Spaces.QueryData */
+        "Spaces.QueryData": components["schemas"]["Spaces.DataProjectId"] | components["schemas"]["Spaces.DataAttachmentURL"];
         /**
          * Projects.SetFieldGroundTruth
          * @description Set ground truth status
@@ -3326,10 +4565,22 @@ export interface components {
             ground_truth?: boolean;
         };
         /**
+         * Integrations.ProjectGoneConnectionResponse
+         * @description An inactive connection due to its project being manually removed.
+         */
+        "Integrations.ProjectGoneConnectionResponse": {
+            id: components["schemas"]["Common.UUID"];
+            integration_id: components["schemas"]["Integrations.IntegrationId"];
+            items_synced: components["schemas"]["Common.NullableInteger"];
+            last_synced_at: components["schemas"]["Common.NullableDateTime"];
+            status: components["schemas"]["Integrations.ConnectionStatus"];
+            user_id: components["schemas"]["Common.UUID"];
+        };
+        /**
          * Projects.UpdatePropertyRequest
          * @description Update specified fields of a Property
          */
-        "Projects.UpdatePropertyRequest": components["schemas"]["Projects.UpdateBasicPropertyRequest"] | components["schemas"]["Projects.UpdateSingleSelectPropertyRequest"] | components["schemas"]["Projects.UpdateMultiSelectPropertyRequest"] | components["schemas"]["Projects.UpdatePDFPropertyRequest"] | components["schemas"]["Projects.UpdateCollectionPropertyRequest"] | components["schemas"]["Projects.UpdateUserSelectPropertyRequest"];
+        "Projects.UpdatePropertyRequest": components["schemas"]["Projects.UpdateBasicPropertyRequest"] | components["schemas"]["Projects.UpdateSingleSelectPropertyRequest"] | components["schemas"]["Projects.UpdateMultiSelectPropertyRequest"] | components["schemas"]["Projects.UpdatePDFPropertyRequest"] | components["schemas"]["Projects.UpdateCollectionPropertyRequest"] | components["schemas"]["Projects.UpdateUserSelectPropertyRequest"] | components["schemas"]["Projects.UpdateReferencePropertyRequest"];
         /**
          * Library.EntityResponse
          * @description An entity
@@ -3337,7 +4588,7 @@ export interface components {
         "Library.EntityResponse": {
             active_view_ids?: components["schemas"]["Common.UUID"][];
             fields: {
-                [key: string]: components["schemas"]["Projects.Entities.FieldResponse"] | undefined;
+                [key: string]: components["schemas"]["Projects.Entities.FieldResponse"];
             };
             id: components["schemas"]["Common.UUID"];
             library_attributes: components["schemas"]["Library.LibraryAttributesResponse"];
@@ -3345,11 +4596,41 @@ export interface components {
             project_id: components["schemas"]["Common.UUID"];
         };
         /**
+         * Integrations.IntegrationId
+         * @description The type of the integration that Go supports.
+         * @enum {string}
+         */
+        "Integrations.IntegrationId": "google_drive";
+        /**
+         * SelectOptionValue
+         * @deprecated
+         * @description DEPRECATED: Use FieldSelectOptionValue instead
+         */
+        SelectOptionValue: {
+            matcher: components["schemas"]["PropertyAnyOf"] | components["schemas"]["PropertyAllOf"] | components["schemas"]["PropertyNoneOf"];
+            /** @enum {string} */
+            subject: "select_option_value";
+        };
+        /**
          * Common.NullableUUID
          * Format: uuid
          * @example e23ff3f3-8f77-4e78-9e81-fdb25abfb781
          */
         "Common.NullableUUID": string | null;
+        /**
+         * Projects.ListEntities.FieldToolMetadataResponse
+         * @description Response for a field metadata
+         */
+        "Projects.ListEntities.FieldToolMetadataResponse": {
+            confidence?: number | null;
+            favicon?: {
+                url?: string;
+            };
+            motivation?: string | null;
+            screenshot?: {
+                url?: string;
+            };
+        };
         /**
          * Billing.PlanTemplate
          * @description Represents plan available for a workspace
@@ -3360,20 +4641,6 @@ export interface components {
             name: components["schemas"]["Billing.PlanName"];
             provider: components["schemas"]["Billing.PlanProvider"];
             tier_order: components["schemas"]["Common.Integer"];
-        };
-        /**
-         * WorkspaceInvitations.WorkspaceInvitationResponse
-         * @description A workspace invitation
-         */
-        "WorkspaceInvitations.WorkspaceInvitationResponse": {
-            email: string;
-            expires_at: components["schemas"]["Common.DateTime"];
-            id: components["schemas"]["Common.UUID"];
-            invite_url: string;
-            role: components["schemas"]["WorkspaceInvitations.Role"];
-            /** @enum {string} */
-            status: "pending" | "expired" | "accepted";
-            workspace_id: components["schemas"]["Common.UUID"];
         };
         /**
          * Billing.PlanBillingPeriod
@@ -3395,6 +4662,19 @@ export interface components {
          */
         "Common.UUID": string;
         /**
+         * Integrations.StartedConnectionResponse
+         * @description A started connection.
+         */
+        "Integrations.StartedConnectionResponse": {
+            id: components["schemas"]["Common.UUID"];
+            integration_id: components["schemas"]["Integrations.IntegrationId"];
+            items_synced: components["schemas"]["Common.NullableInteger"];
+            last_synced_at: components["schemas"]["Common.NullableDateTime"];
+            project_id: components["schemas"]["Common.UUID"];
+            status: components["schemas"]["Integrations.ConnectionStatus"];
+            user_id: components["schemas"]["Common.UUID"];
+        };
+        /**
          * update_entity
          * @description Updates the provided fields of an entity.
          */
@@ -3404,7 +4684,7 @@ export interface components {
              * @description Fields to update, note that the field key is the property id or property slug for that field.
              */
             fields: {
-                [key: string]: components["schemas"]["field_value"] | undefined;
+                [key: string]: components["schemas"]["field_value"];
             };
         };
         /**
@@ -3445,21 +4725,13 @@ export interface components {
          * Projects.ListEntities.FieldStatus
          * @enum {string}
          */
-        "Projects.ListEntities.FieldStatus": "idle" | "uploading" | "waiting" | "computing" | "complete" | "error";
+        "Projects.ListEntities.FieldStatus": "idle" | "uploading" | "waiting" | "computing" | "complete" | "error" | "skip";
         /**
          * Pagination.Offset
          * @description The offset to use when paginating records
          * @example 50
          */
         "Pagination.Offset": number | null;
-        /**
-         * WorkspaceInvitations.InviteUser
-         * @description Object describing a user to invite to a workspace
-         */
-        "WorkspaceInvitations.InviteUser": {
-            email: components["schemas"]["Common.Email"];
-            role: components["schemas"]["WorkspaceInvitations.Role"];
-        };
         /** Library.UpsertEntityAttributesRequest */
         "Library.UpsertEntityAttributesRequest": {
             /**
@@ -3475,13 +4747,24 @@ export interface components {
          *
          */
         "Projects.SelectDefaultOption": string | null;
+        /** Spaces.Space */
+        "Spaces.Space": {
+            created_at: components["schemas"]["Common.DateTime"];
+            id: components["schemas"]["Common.UUID"];
+            messages: components["schemas"]["Spaces.Message"][];
+            name: components["schemas"]["Common.NullableString"];
+            status: components["schemas"]["Spaces.Status"];
+            updated_at: components["schemas"]["Common.DateTime"];
+            user_id: components["schemas"]["Common.UUID"];
+            workspace_id: components["schemas"]["Common.UUID"];
+        };
         /**
          * fields
          * @description Fields to prefill with values, note that the field key is the property id or property slug for that field.
          *             Fields not mentioned are going to be set to an empty value.
          */
         fields: {
-            [key: string]: components["schemas"]["field_value"] | undefined;
+            [key: string]: components["schemas"]["field_value"];
         };
         /**
          * Projects.AddTablePropertyRequest
@@ -3493,10 +4776,12 @@ export interface components {
             /** @deprecated */
             input_ids?: components["schemas"]["Common.UUID"][] | null;
             inputs?: components["schemas"]["Projects.PropertyInput"][] | null;
+            /** @default false */
+            is_grounded?: boolean;
             name: string;
             tool: components["schemas"]["Projects.Common.PropertyTool"];
             /** @enum {string} */
-            type: "collection";
+            type: "collection" | "file_collection";
         };
     };
     responses: never;
@@ -3507,12 +4792,97 @@ export interface components {
 }
 export type $defs = Record<string, never>;
 export interface operations {
+    "integration-connections-list": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                workspace_id: components["schemas"]["Common.UUID"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Integrations.ListConnectionsResponse */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Integrations.ListConnectionsResponse"];
+                };
+            };
+            /** @description Common.APIError */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Common.APIError"];
+                };
+            };
+            /** @description Common.APIError */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Common.APIError"];
+                };
+            };
+            /** @description Common.APIError */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Common.APIError"];
+                };
+            };
+            /** @description Common.APIError */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Common.APIError"];
+                };
+            };
+            /** @description Common.APIError */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Common.APIError"];
+                };
+            };
+            /** @description Common.APIError */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Common.APIError"];
+                };
+            };
+            /** @description Common.APIError */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Common.APIError"];
+                };
+            };
+        };
+    };
     "entity-id-list": {
         parameters: {
             query?: {
                 parent_entity_id?: components["schemas"]["Common.UUID"];
                 active_view_id?: components["schemas"]["Common.UUID"];
-                /** @description List of field names to order by */
+                /** @description List of property slugs/ids to order by */
                 order_by?: components["schemas"]["Projects.ListEntities.ListEntitiesOrderBy"];
                 /** @description List of order directions for the fields in `order_by` */
                 order_directions?: components["schemas"]["Pagination.OrderDirections"];
@@ -3784,6 +5154,99 @@ export interface operations {
             };
         };
     };
+    "entity-bulk-confirm-file-upload": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                workspace_id: components["schemas"]["Common.UUID"];
+                project_id: components["schemas"]["Common.UUID"];
+                /** @description Property ID or slug */
+                property_id_or_slug: components["schemas"]["Projects.PropertyIdOrSlug"];
+            };
+            cookie?: never;
+        };
+        /** @description Projects.Entities.EntityBulkConfirmUploadRequest */
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["Projects.Entities.EntityBulkConfirmUploadRequest"];
+            };
+        };
+        responses: {
+            /** @description Projects.Entities.EntityBulkConfirmUploadResponse */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Projects.Entities.EntityBulkConfirmUploadResponse"];
+                };
+            };
+            /** @description Common.APIError */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Common.APIError"];
+                };
+            };
+            /** @description Common.APIError */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Common.APIError"];
+                };
+            };
+            /** @description Common.APIError */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Common.APIError"];
+                };
+            };
+            /** @description Common.APIError */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Common.APIError"];
+                };
+            };
+            /** @description Common.APIError */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Common.APIError"];
+                };
+            };
+            /** @description Common.APIError */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Common.APIError"];
+                };
+            };
+            /** @description Common.APIError */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Common.APIError"];
+                };
+            };
+        };
+    };
     "tools-toggle-integration": {
         parameters: {
             query?: never;
@@ -3898,6 +5361,92 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["Projects.ListEntities.ListEntitiesResponse"];
+                };
+            };
+            /** @description Common.APIError */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Common.APIError"];
+                };
+            };
+            /** @description Common.APIError */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Common.APIError"];
+                };
+            };
+            /** @description Common.APIError */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Common.APIError"];
+                };
+            };
+            /** @description Common.APIError */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Common.APIError"];
+                };
+            };
+            /** @description Common.APIError */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Common.APIError"];
+                };
+            };
+            /** @description Common.APIError */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Common.APIError"];
+                };
+            };
+            /** @description Common.APIError */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Common.APIError"];
+                };
+            };
+        };
+    };
+    "billing-project-usage": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                workspace_id: components["schemas"]["Common.UUID"];
+                project_id: components["schemas"]["Common.UUID"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Billing.ProjectUsageResponse */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Billing.ProjectUsageResponse"];
                 };
             };
             /** @description Common.APIError */
@@ -4169,6 +5718,556 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["Projects.ViewResponse"];
+                };
+            };
+            /** @description Common.APIError */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Common.APIError"];
+                };
+            };
+            /** @description Common.APIError */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Common.APIError"];
+                };
+            };
+            /** @description Common.APIError */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Common.APIError"];
+                };
+            };
+            /** @description Common.APIError */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Common.APIError"];
+                };
+            };
+            /** @description Common.APIError */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Common.APIError"];
+                };
+            };
+            /** @description Common.APIError */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Common.APIError"];
+                };
+            };
+            /** @description Common.APIError */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Common.APIError"];
+                };
+            };
+        };
+    };
+    "user-project-member-get": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                workspace_id: components["schemas"]["Common.UUID"];
+                project_id: components["schemas"]["Common.UUID"];
+                user_id: components["schemas"]["Users.MemberId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Users.ResourceEffectiveMemberResponse */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Users.ResourceEffectiveMemberResponse"];
+                };
+            };
+            /** @description Common.APIError */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Common.APIError"];
+                };
+            };
+            /** @description Common.APIError */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Common.APIError"];
+                };
+            };
+            /** @description Common.APIError */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Common.APIError"];
+                };
+            };
+            /** @description Common.APIError */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Common.APIError"];
+                };
+            };
+            /** @description Common.APIError */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Common.APIError"];
+                };
+            };
+            /** @description Common.APIError */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Common.APIError"];
+                };
+            };
+            /** @description Common.APIError */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Common.APIError"];
+                };
+            };
+        };
+    };
+    "user-project-member-update": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                workspace_id: components["schemas"]["Common.UUID"];
+                project_id: components["schemas"]["Common.UUID"];
+                user_id: components["schemas"]["Users.MemberId"];
+            };
+            cookie?: never;
+        };
+        /** @description Users.UpdateMemberRequest */
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["Users.UpdateMemberRequest"];
+            };
+        };
+        responses: {
+            /** @description Users.ResourceMemberResponse */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Users.ResourceMemberResponse"];
+                };
+            };
+            /** @description Common.APIError */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Common.APIError"];
+                };
+            };
+            /** @description Common.APIError */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Common.APIError"];
+                };
+            };
+            /** @description Common.APIError */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Common.APIError"];
+                };
+            };
+            /** @description Common.APIError */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Common.APIError"];
+                };
+            };
+            /** @description Common.APIError */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Common.APIError"];
+                };
+            };
+            /** @description Common.APIError */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Common.APIError"];
+                };
+            };
+            /** @description Common.APIError */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Common.APIError"];
+                };
+            };
+        };
+    };
+    "user-project-member-add": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                workspace_id: components["schemas"]["Common.UUID"];
+                project_id: components["schemas"]["Common.UUID"];
+                user_id: components["schemas"]["Users.MemberId"];
+            };
+            cookie?: never;
+        };
+        /** @description Users.AddMemberRequest */
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["Users.AddMemberRequest"];
+            };
+        };
+        responses: {
+            /** @description Users.ResourceMemberResponse */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Users.ResourceMemberResponse"];
+                };
+            };
+            /** @description Common.APIError */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Common.APIError"];
+                };
+            };
+            /** @description Common.APIError */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Common.APIError"];
+                };
+            };
+            /** @description Common.APIError */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Common.APIError"];
+                };
+            };
+            /** @description Common.APIError */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Common.APIError"];
+                };
+            };
+            /** @description Common.APIError */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Common.APIError"];
+                };
+            };
+            /** @description Common.APIError */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Common.APIError"];
+                };
+            };
+            /** @description Common.APIError */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Common.APIError"];
+                };
+            };
+        };
+    };
+    "user-project-member-delete": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                workspace_id: components["schemas"]["Common.UUID"];
+                project_id: components["schemas"]["Common.UUID"];
+                user_id: components["schemas"]["Users.MemberId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Users.ResourceMemberResponse */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Users.ResourceMemberResponse"];
+                };
+            };
+            /** @description Common.APIError */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Common.APIError"];
+                };
+            };
+            /** @description Common.APIError */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Common.APIError"];
+                };
+            };
+            /** @description Common.APIError */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Common.APIError"];
+                };
+            };
+            /** @description Common.APIError */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Common.APIError"];
+                };
+            };
+            /** @description Common.APIError */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Common.APIError"];
+                };
+            };
+            /** @description Common.APIError */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Common.APIError"];
+                };
+            };
+            /** @description Common.APIError */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Common.APIError"];
+                };
+            };
+        };
+    };
+    "space-list": {
+        parameters: {
+            query?: {
+                /** @description List of field names to order by */
+                order_by?: components["schemas"]["Spaces.ListSpacesOrderBy"];
+                /** @description List of order directions for the fields in `order_by` */
+                order_directions?: components["schemas"]["Pagination.OrderDirections"];
+                /** @description The maximum number of records to return when using `offset` pagination */
+                limit?: components["schemas"]["Pagination.Limit"];
+                /** @description The offset to use when paginating records */
+                offset?: components["schemas"]["Pagination.Offset"];
+                /** @description The number of records to return after the provided cursor; used in combination with `after` */
+                first?: components["schemas"]["Pagination.First"];
+                /** @description The number of records to return for before the provided cursor; used in combination with `before` */
+                last?: components["schemas"]["Pagination.Last"];
+                /** @description A base64 encoded value representing a cursor, or an element ID if applicable */
+                after?: components["schemas"]["Pagination.Cursor"];
+                /** @description A base64 encoded value representing a cursor, or an element ID if applicable */
+                before?: components["schemas"]["Pagination.Cursor"];
+            };
+            header?: never;
+            path: {
+                workspace_id: components["schemas"]["Common.UUID"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Spaces.ListSpacesResponse */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Spaces.ListSpacesResponse"];
+                };
+            };
+            /** @description Common.APIError */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Common.APIError"];
+                };
+            };
+            /** @description Common.APIError */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Common.APIError"];
+                };
+            };
+            /** @description Common.APIError */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Common.APIError"];
+                };
+            };
+            /** @description Common.APIError */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Common.APIError"];
+                };
+            };
+            /** @description Common.APIError */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Common.APIError"];
+                };
+            };
+            /** @description Common.APIError */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Common.APIError"];
+                };
+            };
+            /** @description Common.APIError */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Common.APIError"];
+                };
+            };
+        };
+    };
+    "space-create": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                workspace_id: components["schemas"]["Common.UUID"];
+            };
+            cookie?: never;
+        };
+        /** @description Spaces.DoQuery */
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["Spaces.DoQuery"];
+            };
+        };
+        responses: {
+            /** @description Spaces.Space */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Spaces.Space"];
                 };
             };
             /** @description Common.APIError */
@@ -4679,6 +6778,188 @@ export interface operations {
             };
         };
     };
+    "ask-go-set-message-metadata": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                workspace_id: components["schemas"]["Common.UUID"];
+                session_id: components["schemas"]["Common.UUID"];
+            };
+            cookie?: never;
+        };
+        /** @description AskGo.SetMessageMetadataRequest */
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AskGo.SetMessageMetadataRequest"];
+            };
+        };
+        responses: {
+            /** @description AskGo.SessionResponse */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AskGo.SessionResponse"];
+                };
+            };
+            /** @description Common.APIError */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Common.APIError"];
+                };
+            };
+            /** @description Common.APIError */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Common.APIError"];
+                };
+            };
+            /** @description Common.APIError */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Common.APIError"];
+                };
+            };
+            /** @description Common.APIError */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Common.APIError"];
+                };
+            };
+            /** @description Common.APIError */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Common.APIError"];
+                };
+            };
+            /** @description Common.APIError */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Common.APIError"];
+                };
+            };
+            /** @description Common.APIError */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Common.APIError"];
+                };
+            };
+        };
+    };
+    "project-invitation-accept": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                workspace_id: components["schemas"]["Common.UUID"];
+                project_id: components["schemas"]["Common.UUID"];
+            };
+            cookie?: never;
+        };
+        /** @description Invitations.AcceptInvitationRequest */
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["Invitations.AcceptInvitationRequest"];
+            };
+        };
+        responses: {
+            /** @description Invitations.ProjectInvitationResponse */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Invitations.ProjectInvitationResponse"];
+                };
+            };
+            /** @description Common.APIError */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Common.APIError"];
+                };
+            };
+            /** @description Common.APIError */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Common.APIError"];
+                };
+            };
+            /** @description Common.APIError */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Common.APIError"];
+                };
+            };
+            /** @description Common.APIError */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Common.APIError"];
+                };
+            };
+            /** @description Common.APIError */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Common.APIError"];
+                };
+            };
+            /** @description Common.APIError */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Common.APIError"];
+                };
+            };
+            /** @description Common.APIError */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Common.APIError"];
+                };
+            };
+        };
+    };
     "project-list-properties": {
         parameters: {
             query?: never;
@@ -5122,6 +7403,100 @@ export interface operations {
             };
         };
     };
+    "entity-set-metadata": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                workspace_id: components["schemas"]["Common.UUID"];
+                project_id: components["schemas"]["Common.UUID"];
+                entity_id: components["schemas"]["Common.UUID"];
+                /** @description Property ID or slug */
+                property_id_or_slug: components["schemas"]["Projects.PropertyIdOrSlug"];
+            };
+            cookie?: never;
+        };
+        /** @description Projects.SetFieldMetadataRequest */
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["Projects.SetFieldMetadataRequest"];
+            };
+        };
+        responses: {
+            /** @description Projects.Entities.FieldResponse */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Projects.Entities.FieldResponse"];
+                };
+            };
+            /** @description Common.APIError */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Common.APIError"];
+                };
+            };
+            /** @description Common.APIError */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Common.APIError"];
+                };
+            };
+            /** @description Common.APIError */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Common.APIError"];
+                };
+            };
+            /** @description Common.APIError */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Common.APIError"];
+                };
+            };
+            /** @description Common.APIError */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Common.APIError"];
+                };
+            };
+            /** @description Common.APIError */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Common.APIError"];
+                };
+            };
+            /** @description Common.APIError */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Common.APIError"];
+                };
+            };
+        };
+    };
     "api-key-get": {
         parameters: {
             query?: never;
@@ -5299,7 +7674,7 @@ export interface operations {
                 /** @deprecated */
                 active_view_ids?: components["schemas"]["Common.UUIDList"];
                 active_view_id?: components["schemas"]["Common.UUID"];
-                /** @description List of field names to order by */
+                /** @description List of property slugs/ids to order by */
                 order_by?: components["schemas"]["Library.ListEntitiesOrderBy"];
                 /** @description List of order directions for the fields in `order_by` */
                 order_directions?: components["schemas"]["Pagination.OrderDirections"];
@@ -5944,13 +8319,100 @@ export interface operations {
             };
         };
     };
+    "integration-connection-create": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                workspace_id: components["schemas"]["Common.UUID"];
+                /** @description The type of the integration that Go supports. */
+                integration_id: components["schemas"]["Integrations.IntegrationId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Integrations.ConnectSessionResponse */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Integrations.ConnectSessionResponse"];
+                };
+            };
+            /** @description Common.APIError */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Common.APIError"];
+                };
+            };
+            /** @description Common.APIError */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Common.APIError"];
+                };
+            };
+            /** @description Common.APIError */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Common.APIError"];
+                };
+            };
+            /** @description Common.APIError */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Common.APIError"];
+                };
+            };
+            /** @description Common.APIError */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Common.APIError"];
+                };
+            };
+            /** @description Common.APIError */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Common.APIError"];
+                };
+            };
+            /** @description Common.APIError */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Common.APIError"];
+                };
+            };
+        };
+    };
     "get-previous-entity": {
         parameters: {
             query?: {
                 /** @deprecated */
                 active_view_ids?: components["schemas"]["Common.UUIDList"];
                 active_view_id?: components["schemas"]["Common.UUID"];
-                /** @description List of field names to order by */
+                /** @description List of property slugs/ids to order by */
                 order_by?: components["schemas"]["Projects.ListEntities.ListEntitiesOrderBy"];
                 /** @description List of order directions for the fields in `order_by` */
                 order_directions?: components["schemas"]["Pagination.OrderDirections"];
@@ -6496,6 +8958,94 @@ export interface operations {
             };
         };
     };
+    "workspace-invitation-verify": {
+        parameters: {
+            query: {
+                invite_token: components["schemas"]["Common.String"];
+                email: components["schemas"]["Common.String"];
+            };
+            header?: never;
+            path: {
+                workspace_id: components["schemas"]["Common.UUID"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Invitations.WorkspaceInvitationVerifyResponse */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Invitations.WorkspaceInvitationVerifyResponse"];
+                };
+            };
+            /** @description Common.APIError */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Common.APIError"];
+                };
+            };
+            /** @description Common.APIError */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Common.APIError"];
+                };
+            };
+            /** @description Common.APIError */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Common.APIError"];
+                };
+            };
+            /** @description Common.APIError */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Common.APIError"];
+                };
+            };
+            /** @description Common.APIError */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Common.APIError"];
+                };
+            };
+            /** @description Common.APIError */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Common.APIError"];
+                };
+            };
+            /** @description Common.APIError */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Common.APIError"];
+                };
+            };
+        };
+    };
     "workspace-list": {
         parameters: {
             query?: never;
@@ -6939,7 +9489,7 @@ export interface operations {
                 /** @deprecated */
                 active_view_ids?: components["schemas"]["Common.UUIDList"];
                 active_view_id?: components["schemas"]["Common.UUID"];
-                /** @description List of field names to order by */
+                /** @description List of property slugs/ids to order by */
                 order_by?: components["schemas"]["Projects.ListEntities.ListEntitiesOrderBy"];
                 /** @description List of order directions for the fields in `order_by` */
                 order_directions?: components["schemas"]["Pagination.OrderDirections"];
@@ -6973,6 +9523,93 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["Projects.ListEntities.ListEntitiesResponse"];
+                };
+            };
+            /** @description Common.APIError */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Common.APIError"];
+                };
+            };
+            /** @description Common.APIError */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Common.APIError"];
+                };
+            };
+            /** @description Common.APIError */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Common.APIError"];
+                };
+            };
+            /** @description Common.APIError */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Common.APIError"];
+                };
+            };
+            /** @description Common.APIError */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Common.APIError"];
+                };
+            };
+            /** @description Common.APIError */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Common.APIError"];
+                };
+            };
+            /** @description Common.APIError */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Common.APIError"];
+                };
+            };
+        };
+    };
+    "project-invitation-delete": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                workspace_id: components["schemas"]["Common.UUID"];
+                project_id: components["schemas"]["Common.UUID"];
+                invitation_id: components["schemas"]["Common.UUID"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Common.DeleteResponse */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Common.DeleteResponse"];
                 };
             };
             /** @description Common.APIError */
@@ -7130,7 +9767,7 @@ export interface operations {
         parameters: {
             query?: {
                 /** @description List of field names to order by */
-                order_by?: components["schemas"]["WorkspaceInvitations.OrderBy"];
+                order_by?: components["schemas"]["Invitations.OrderBy"];
                 /** @description List of order directions for the fields in `order_by` */
                 order_directions?: components["schemas"]["Pagination.OrderDirections"];
                 /** @description The maximum number of records to return when using `offset` pagination */
@@ -7154,13 +9791,13 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            /** @description WorkspaceInvitations.ListInvitationsResponse */
+            /** @description Invitations.ListWorkspaceInvitationsResponse */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["WorkspaceInvitations.ListInvitationsResponse"];
+                    "application/json": components["schemas"]["Invitations.ListWorkspaceInvitationsResponse"];
                 };
             };
             /** @description Common.APIError */
@@ -7237,20 +9874,20 @@ export interface operations {
             };
             cookie?: never;
         };
-        /** @description WorkspaceInvitations.CreateInvitationRequest */
+        /** @description Invitations.CreateInvitationRequest */
         requestBody: {
             content: {
-                "application/json": components["schemas"]["WorkspaceInvitations.CreateInvitationRequest"];
+                "application/json": components["schemas"]["Invitations.CreateInvitationRequest"];
             };
         };
         responses: {
-            /** @description WorkspaceInvitations.CreateInvitationResponse */
+            /** @description Invitations.CreateInvitationResponse */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["WorkspaceInvitations.CreateInvitationResponse"];
+                    "application/json": components["schemas"]["Invitations.CreateInvitationResponse"];
                 };
             };
             /** @description Common.APIError */
@@ -7608,6 +10245,95 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["Users.UserMeResponse"];
+                };
+            };
+            /** @description Common.APIError */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Common.APIError"];
+                };
+            };
+            /** @description Common.APIError */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Common.APIError"];
+                };
+            };
+            /** @description Common.APIError */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Common.APIError"];
+                };
+            };
+            /** @description Common.APIError */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Common.APIError"];
+                };
+            };
+            /** @description Common.APIError */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Common.APIError"];
+                };
+            };
+            /** @description Common.APIError */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Common.APIError"];
+                };
+            };
+            /** @description Common.APIError */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Common.APIError"];
+                };
+            };
+        };
+    };
+    "project-invitation-verify": {
+        parameters: {
+            query: {
+                invite_token: components["schemas"]["Common.String"];
+                email: components["schemas"]["Common.String"];
+            };
+            header?: never;
+            path: {
+                workspace_id: components["schemas"]["Common.UUID"];
+                project_id: components["schemas"]["Common.UUID"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Invitations.ProjectInvitationVerifyResponse */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Invitations.ProjectInvitationVerifyResponse"];
                 };
             };
             /** @description Common.APIError */
@@ -8233,20 +10959,197 @@ export interface operations {
             };
             cookie?: never;
         };
-        /** @description WorkspaceInvitations.AcceptInvitationRequest */
+        /** @description Invitations.AcceptInvitationRequest */
         requestBody: {
             content: {
-                "application/json": components["schemas"]["WorkspaceInvitations.AcceptInvitationRequest"];
+                "application/json": components["schemas"]["Invitations.AcceptInvitationRequest"];
             };
         };
         responses: {
-            /** @description WorkspaceInvitations.WorkspaceInvitationResponse */
+            /** @description Invitations.WorkspaceInvitationResponse */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["WorkspaceInvitations.WorkspaceInvitationResponse"];
+                    "application/json": components["schemas"]["Invitations.WorkspaceInvitationResponse"];
+                };
+            };
+            /** @description Common.APIError */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Common.APIError"];
+                };
+            };
+            /** @description Common.APIError */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Common.APIError"];
+                };
+            };
+            /** @description Common.APIError */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Common.APIError"];
+                };
+            };
+            /** @description Common.APIError */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Common.APIError"];
+                };
+            };
+            /** @description Common.APIError */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Common.APIError"];
+                };
+            };
+            /** @description Common.APIError */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Common.APIError"];
+                };
+            };
+            /** @description Common.APIError */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Common.APIError"];
+                };
+            };
+        };
+    };
+    "space-list-messages": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                workspace_id: components["schemas"]["Common.UUID"];
+                space_id: components["schemas"]["Common.UUID"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Spaces.ListMessagesResponse */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Spaces.ListMessagesResponse"];
+                };
+            };
+            /** @description Common.APIError */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Common.APIError"];
+                };
+            };
+            /** @description Common.APIError */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Common.APIError"];
+                };
+            };
+            /** @description Common.APIError */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Common.APIError"];
+                };
+            };
+            /** @description Common.APIError */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Common.APIError"];
+                };
+            };
+            /** @description Common.APIError */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Common.APIError"];
+                };
+            };
+            /** @description Common.APIError */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Common.APIError"];
+                };
+            };
+            /** @description Common.APIError */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Common.APIError"];
+                };
+            };
+        };
+    };
+    "space-add-query": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                workspace_id: components["schemas"]["Common.UUID"];
+                space_id: components["schemas"]["Common.UUID"];
+            };
+            cookie?: never;
+        };
+        /** @description Spaces.DoQuery */
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["Spaces.DoQuery"];
+            };
+        };
+        responses: {
+            /** @description Spaces.Space */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Spaces.Space"];
                 };
             };
             /** @description Common.APIError */
@@ -8955,19 +11858,19 @@ export interface operations {
             header?: never;
             path: {
                 workspace_id: components["schemas"]["Common.UUID"];
-                user_id: components["schemas"]["Common.UUID"];
+                user_id: components["schemas"]["Users.MemberId"];
             };
             cookie?: never;
         };
         requestBody?: never;
         responses: {
-            /** @description Users.ResourceMemberResponse */
+            /** @description Users.ResourceEffectiveMemberResponse */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["Users.ResourceMemberResponse"];
+                    "application/json": components["schemas"]["Users.ResourceEffectiveMemberResponse"];
                 };
             };
             /** @description Common.APIError */
@@ -9041,7 +11944,7 @@ export interface operations {
             header?: never;
             path: {
                 workspace_id: components["schemas"]["Common.UUID"];
-                user_id: components["schemas"]["Common.UUID"];
+                user_id: components["schemas"]["Users.MemberId"];
             };
             cookie?: never;
         };
@@ -9132,7 +12035,7 @@ export interface operations {
             header?: never;
             path: {
                 workspace_id: components["schemas"]["Common.UUID"];
-                user_id: components["schemas"]["Common.UUID"];
+                user_id: components["schemas"]["Users.MemberId"];
             };
             cookie?: never;
         };
@@ -9212,11 +12115,208 @@ export interface operations {
             };
         };
     };
+    "project-invitation-list": {
+        parameters: {
+            query?: {
+                /** @description List of field names to order by */
+                order_by?: components["schemas"]["Invitations.OrderBy"];
+                /** @description List of order directions for the fields in `order_by` */
+                order_directions?: components["schemas"]["Pagination.OrderDirections"];
+                /** @description The maximum number of records to return when using `offset` pagination */
+                limit?: components["schemas"]["Pagination.Limit"];
+                /** @description The offset to use when paginating records */
+                offset?: components["schemas"]["Pagination.Offset"];
+                /** @description The number of records to return after the provided cursor; used in combination with `after` */
+                first?: components["schemas"]["Pagination.First"];
+                /** @description The number of records to return for before the provided cursor; used in combination with `before` */
+                last?: components["schemas"]["Pagination.Last"];
+                /** @description A base64 encoded value representing a cursor, or an element ID if applicable */
+                after?: components["schemas"]["Pagination.Cursor"];
+                /** @description A base64 encoded value representing a cursor, or an element ID if applicable */
+                before?: components["schemas"]["Pagination.Cursor"];
+            };
+            header?: never;
+            path: {
+                workspace_id: components["schemas"]["Common.UUID"];
+                project_id: components["schemas"]["Common.UUID"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Invitations.ListProjectInvitationsResponse */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Invitations.ListProjectInvitationsResponse"];
+                };
+            };
+            /** @description Common.APIError */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Common.APIError"];
+                };
+            };
+            /** @description Common.APIError */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Common.APIError"];
+                };
+            };
+            /** @description Common.APIError */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Common.APIError"];
+                };
+            };
+            /** @description Common.APIError */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Common.APIError"];
+                };
+            };
+            /** @description Common.APIError */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Common.APIError"];
+                };
+            };
+            /** @description Common.APIError */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Common.APIError"];
+                };
+            };
+            /** @description Common.APIError */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Common.APIError"];
+                };
+            };
+        };
+    };
+    "project-invitation-create": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                workspace_id: components["schemas"]["Common.UUID"];
+                project_id: components["schemas"]["Common.UUID"];
+            };
+            cookie?: never;
+        };
+        /** @description Invitations.CreateInvitationRequest */
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["Invitations.CreateInvitationRequest"];
+            };
+        };
+        responses: {
+            /** @description Invitations.CreateInvitationResponse */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Invitations.CreateInvitationResponse"];
+                };
+            };
+            /** @description Common.APIError */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Common.APIError"];
+                };
+            };
+            /** @description Common.APIError */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Common.APIError"];
+                };
+            };
+            /** @description Common.APIError */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Common.APIError"];
+                };
+            };
+            /** @description Common.APIError */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Common.APIError"];
+                };
+            };
+            /** @description Common.APIError */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Common.APIError"];
+                };
+            };
+            /** @description Common.APIError */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Common.APIError"];
+                };
+            };
+            /** @description Common.APIError */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Common.APIError"];
+                };
+            };
+        };
+    };
     "project-list": {
         parameters: {
             query?: {
+                project_type?: components["schemas"]["Projects.ProjectType"];
                 /** @description Only return parent projects */
                 only_parents?: components["schemas"]["Projects.OnlyParentProjects"];
+                /** @description Include membership information for the calling user */
+                include_membership_info?: components["schemas"]["Projects.IncludeMembershipInfo"];
                 /** @description List of field names to order by */
                 order_by?: components["schemas"]["Projects.ListProjectsOrderBy"];
                 /** @description List of order directions for the fields in `order_by` */
@@ -9339,6 +12439,99 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["Projects.ProjectResponse"];
+                };
+            };
+            /** @description Common.APIError */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Common.APIError"];
+                };
+            };
+            /** @description Common.APIError */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Common.APIError"];
+                };
+            };
+            /** @description Common.APIError */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Common.APIError"];
+                };
+            };
+            /** @description Common.APIError */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Common.APIError"];
+                };
+            };
+            /** @description Common.APIError */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Common.APIError"];
+                };
+            };
+            /** @description Common.APIError */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Common.APIError"];
+                };
+            };
+            /** @description Common.APIError */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Common.APIError"];
+                };
+            };
+        };
+    };
+    "integration-connection-start": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                workspace_id: components["schemas"]["Common.UUID"];
+                /** @description The type of the integration that Go supports. */
+                integration_id: components["schemas"]["Integrations.IntegrationId"];
+                connection_id: components["schemas"]["Common.UUID"];
+            };
+            cookie?: never;
+        };
+        /** @description Integrations.ConnectionStartSettings */
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["Integrations.ConnectionStartSettings"];
+            };
+        };
+        responses: {
+            /** @description Integrations.StartConnectionResponse */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Integrations.StartConnectionResponse"];
                 };
             };
             /** @description Common.APIError */
@@ -10104,6 +13297,178 @@ export interface operations {
             };
         };
     };
+    "space-get": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                workspace_id: components["schemas"]["Common.UUID"];
+                space_id: components["schemas"]["Common.UUID"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Spaces.Space */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Spaces.Space"];
+                };
+            };
+            /** @description Common.APIError */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Common.APIError"];
+                };
+            };
+            /** @description Common.APIError */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Common.APIError"];
+                };
+            };
+            /** @description Common.APIError */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Common.APIError"];
+                };
+            };
+            /** @description Common.APIError */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Common.APIError"];
+                };
+            };
+            /** @description Common.APIError */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Common.APIError"];
+                };
+            };
+            /** @description Common.APIError */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Common.APIError"];
+                };
+            };
+            /** @description Common.APIError */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Common.APIError"];
+                };
+            };
+        };
+    };
+    "space-delete": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                workspace_id: components["schemas"]["Common.UUID"];
+                space_id: components["schemas"]["Common.UUID"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Common.DeleteResponse */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Common.DeleteResponse"];
+                };
+            };
+            /** @description Common.APIError */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Common.APIError"];
+                };
+            };
+            /** @description Common.APIError */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Common.APIError"];
+                };
+            };
+            /** @description Common.APIError */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Common.APIError"];
+                };
+            };
+            /** @description Common.APIError */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Common.APIError"];
+                };
+            };
+            /** @description Common.APIError */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Common.APIError"];
+                };
+            };
+            /** @description Common.APIError */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Common.APIError"];
+                };
+            };
+            /** @description Common.APIError */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Common.APIError"];
+                };
+            };
+        };
+    };
     "entity-get": {
         parameters: {
             query?: never;
@@ -10734,7 +14099,7 @@ export interface operations {
                 /** @deprecated */
                 active_view_ids?: components["schemas"]["Common.UUIDList"];
                 active_view_id?: components["schemas"]["Common.UUID"];
-                /** @description List of field names to order by */
+                /** @description List of property slugs/ids to order by */
                 order_by?: components["schemas"]["Projects.ListEntities.ListEntitiesOrderBy"];
                 /** @description List of order directions for the fields in `order_by` */
                 order_directions?: components["schemas"]["Pagination.OrderDirections"];
@@ -11317,6 +14682,94 @@ export interface operations {
             };
         };
     };
+    "integration-connection-delete": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                workspace_id: components["schemas"]["Common.UUID"];
+                /** @description The type of the integration that Go supports. */
+                integration_id: components["schemas"]["Integrations.IntegrationId"];
+                connection_id: components["schemas"]["Common.UUID"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Common.DeleteResponse */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Common.DeleteResponse"];
+                };
+            };
+            /** @description Common.APIError */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Common.APIError"];
+                };
+            };
+            /** @description Common.APIError */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Common.APIError"];
+                };
+            };
+            /** @description Common.APIError */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Common.APIError"];
+                };
+            };
+            /** @description Common.APIError */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Common.APIError"];
+                };
+            };
+            /** @description Common.APIError */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Common.APIError"];
+                };
+            };
+            /** @description Common.APIError */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Common.APIError"];
+                };
+            };
+            /** @description Common.APIError */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Common.APIError"];
+                };
+            };
+        };
+    };
     "tools-delete-key": {
         parameters: {
             query?: never;
@@ -11336,6 +14789,92 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["Tools.KeyManager.ToolKeyResponse"];
+                };
+            };
+            /** @description Common.APIError */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Common.APIError"];
+                };
+            };
+            /** @description Common.APIError */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Common.APIError"];
+                };
+            };
+            /** @description Common.APIError */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Common.APIError"];
+                };
+            };
+            /** @description Common.APIError */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Common.APIError"];
+                };
+            };
+            /** @description Common.APIError */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Common.APIError"];
+                };
+            };
+            /** @description Common.APIError */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Common.APIError"];
+                };
+            };
+            /** @description Common.APIError */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Common.APIError"];
+                };
+            };
+        };
+    };
+    "user-project-members-list": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                workspace_id: components["schemas"]["Common.UUID"];
+                project_id: components["schemas"]["Common.UUID"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Users.ListResourceMembersResponse */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Users.ListResourceMembersResponse"];
                 };
             };
             /** @description Common.APIError */

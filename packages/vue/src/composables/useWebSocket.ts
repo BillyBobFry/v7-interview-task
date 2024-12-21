@@ -1,8 +1,7 @@
 import { createSharedComposable, watchOnce } from '@vueuse/core'
 import type { Channel } from 'phoenix'
-import { ref, watch } from 'vue'
+import { onMounted, ref } from 'vue'
 import { Socket } from 'phoenix'
-import { useApiKeyStore } from '@/stores/apiKey'
 import { API_BASE_URL } from '@v7-product-interview-task/api'
 
 
@@ -33,7 +32,6 @@ export const useWebSocket = createSharedComposable(() => {
   const socket = ref<null | ReturnType<typeof createSocket>>(null)
   const connectionTries = ref(0)
 
-  const tokenStore = useApiKeyStore()
   const socketState = ref('closed')
 
   const updateSocketState = () => {
@@ -58,7 +56,7 @@ export const useWebSocket = createSharedComposable(() => {
       return
     }
 
-    const token = tokenStore.token
+    const token = import.meta.env.VITE_API_KEY
     socket.value = createSocket(token)
     socket.value?.onOpen(updateSocketState)
     socket.value?.onClose(updateSocketState)
@@ -104,12 +102,10 @@ export const useWebSocket = createSharedComposable(() => {
       })
     })
 
-  watch(() => tokenStore.isValid, async (isValid) => {
-    if (isValid) {
+  onMounted(async () => {
+    if (import.meta.env.VITE_API_KEY) {
       await connect()
     }
-  }, {
-    immediate: true,
   })
 
   return {

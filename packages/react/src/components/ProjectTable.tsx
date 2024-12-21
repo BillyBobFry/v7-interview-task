@@ -3,7 +3,7 @@ import { Link, useParams } from 'react-router-dom';
 import {ProjectTableCell} from './ProjectTableCell';
 import {ProjectTableHeaderCell} from './ProjectTableHeaderCell';
 import { useProjectContext } from '@/contexts/ProjectContext';
-import '@v7-product-interview-task/styles/ProjectTable.module.css'
+import styles from '@v7-product-interview-task/styles/ProjectTable.module.css'
 
 // Custom hook to handle project channel (you'll need to implement the actual WebSocket logic)
 const useProjectChannel = (projectId: string) => {
@@ -23,10 +23,10 @@ export const ProjectTable = () => {
   const {entities, project} = useProjectContext()
 
   return (
-    <div className="container">
+    <div className={styles.container}>
       {project && (
         <table 
-          className="grid"
+          className={styles.grid}
           role="grid"
           style={{ 
             gridTemplateColumns: `repeat(${project.properties.length}, 1fr)` 
@@ -49,7 +49,7 @@ export const ProjectTable = () => {
               <tr key={entity.id}>
                 <td tabIndex={0}>
                   <Link
-                    to={`/workspace/${workspaceId}/project/${projectId}/entity/${entity.id}`}
+                    to={`/${workspaceId}/projects/${projectId}/entities/${entity.id}`}
                   >
                     {entityIndex + 1}
                   </Link>

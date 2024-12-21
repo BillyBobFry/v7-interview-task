@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import type { Entity } from '@v7-product-interview-task/api'
 import { computed, ref } from "vue";
-import '@v7-product-interview-task/styles/ProjectTableCell.module.css';
 
 const props = defineProps<{
   propertyIndex: number;
@@ -26,6 +25,7 @@ const text = computed(() => {
 
 <template>
   <td
+    class="cell"
     ref="cellRef"
     role="gridcell"
     :aria-rowindex="entityIndex + 1"
@@ -34,7 +34,7 @@ const text = computed(() => {
     @click="onClickCell"
   >
     <span v-if="text">{{ text }}</span>
-    <i v-else>(empty)</i>
+    <span v-else class="empty-cell">(empty)</span>
   </td>
 </template>
 
