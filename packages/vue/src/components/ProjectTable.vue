@@ -93,38 +93,5 @@ watch(() => apiKeyStore.token, async (newTokenValue) => {
 </template>
 
 <style scoped>
-.container {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-	height: 100%;
-  padding: 0.5rem;
-}
-
-.auth-token-config {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-table {
-  min-width: 100%;
-  border-collapse: collapse;
-}
-
-td, th {
-	text-align: left;
-  border: 1px solid grey;
-}
-
-td {
-  position: relative;
-	vertical-align: top;
-	padding: 0.5rem;
-
-}
-
-td:focus, th:focus {
-  outline: 2px solid deepskyblue;
-}
+@import "@v7-product-interview-task/styles/ProjectTable.module.css";
 </style>

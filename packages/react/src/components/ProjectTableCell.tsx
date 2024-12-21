@@ -1,5 +1,6 @@
 import { Entity } from '@v7-product-interview-task/api';
 import React, { useRef } from 'react';
+import '@v7-product-interview-task/styles/ProjectTableCell.module.css'
 
 interface TableCellProps {
   propertyIndex: number;

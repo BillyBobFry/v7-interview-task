@@ -24,8 +24,6 @@ const port = window.location.port;
 </template>
 
 <style scoped>
-.monospace {
-  font-family: monospace;
-}
+@import "@v7-product-interview-task/styles/FallbackPage.module.css";
 </style>
 

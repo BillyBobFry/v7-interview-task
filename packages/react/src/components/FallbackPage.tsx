@@ -1,3 +1,5 @@
+import "@v7-product-interview-task/styles/FallbackPage.module.css"
+
 export const FallbackPage = () => {
   const hostname = window.location.hostname;
   const port = window.location.port;

@@ -1,0 +1,10 @@
+td {
+  padding: 0.5rem;
+  min-width: 300px;
+  max-width: 500px;
+  overflow: hidden;
+}
+
+i {
+  opacity: 0.75;
+}

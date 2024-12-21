@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@v7-product-interview-task/api": "*",
+    "@v7-product-interview-task/styles": "*",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-router": "^7.0.2",

@@ -1,31 +1,35 @@
-import { useEffect } from 'react'
-import './assets/main.css'
-import {getEntities, getProject} from '@v7-product-interview-task/api'
+import "./assets/main.css";
 import { BrowserRouter, Route, Routes } from "react-router";
-import { ProjectTable } from './components/ProjectTable'
-import { EntityView } from './components/EntityView'
-import { FallbackPage } from './components/FallbackPage'
+import { ProjectTable } from "./components/ProjectTable";
+import { EntityView } from "./components/EntityView";
+import { FallbackPage } from "./components/FallbackPage";
+import { ProjectProvider } from "./contexts/ProjectContext";
 
 function App() {
-  console.log(import.meta.env)
-
+  console.log(import.meta.env);
 
   return (
     <BrowserRouter>
       <Routes>
-      <Route path="/:workspaceId/projects/:projectId">        
-        {/* Table view (index route) */}
-        <Route index element={<ProjectTable />} />
-        
-        {/* Entity view */}
-        <Route path="entities/:entityId" element={<EntityView />} />
-      </Route>
+        <Route path="/:workspaceId/projects/:projectId">
+          {/* Table view (index route) */}
+          <Route
+            index
+            element={
+              <ProjectProvider>
+                <ProjectTable />
+              </ProjectProvider>
+            }
+          />
 
-      {/* Fallback route */}
-      <Route path="*" element={<FallbackPage />} />
+          {/* Entity view */}
+          <Route path="entities/:entityId" element={<EntityView />} />
+        </Route>
+        {/* Fallback route */}
+        <Route path="*" element={<FallbackPage />} />
       </Routes>
     </BrowserRouter>
-  )
+  );
 }
 
-export default App
+export default App;

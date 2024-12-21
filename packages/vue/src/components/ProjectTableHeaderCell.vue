@@ -20,12 +20,6 @@ defineProps<{
 </template>
 
 <style scoped>
-th {
-  padding: 0.5rem;
-}
-
-i {
-  font-weight: 400;
-}
+@import "@v7-product-interview-task/styles/ProjectTableHeaderCell.module.css";
 </style>
 

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { Entity } from '@v7-product-interview-task/api'
 import { computed, ref } from "vue";
+import '@v7-product-interview-task/styles/ProjectTableCell.module.css';
 
 const props = defineProps<{
   propertyIndex: number;
@@ -38,15 +39,6 @@ const text = computed(() => {
 </template>
 
 <style scoped>
-td {
-  padding: 0.5rem;
-  min-width: 300px;
-  max-width: 500px;
-  overflow: hidden;
-}
-
-i {
-  opacity: 0.75;
-}
+@import "@v7-product-interview-task/styles/ProjectTableCell.module.css";
 </style>
 

@@ -1,4 +1,5 @@
 import { Property } from "@v7-product-interview-task/api";
+import "@v7-product-interview-task/styles/ProjectTableHeaderCell.module.css"
 
 export const ProjectTableHeaderCell = ({
   property,
