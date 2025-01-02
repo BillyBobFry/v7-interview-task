@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import ProjectTableCell from '@/components/ProjectTableCell.vue'
 import ProjectTableHeaderCell from '@/components/ProjectTableHeaderCell.vue'
-import { useProjectChannel } from '@/composables/useProjectChannel'
 import { useEntitiesStore } from '@/stores/entities'
 import { useProjectStore } from '@/stores/project'
 import { watch } from 'vue'
@@ -14,8 +13,6 @@ const props = defineProps<{
 
 const entityStore = useEntitiesStore()
 const projectStore = useProjectStore()
-
-useProjectChannel(props.projectId)
 
 watch(() => props.projectId, async () => {
   const apiKey = import.meta.env.VITE_API_KEY

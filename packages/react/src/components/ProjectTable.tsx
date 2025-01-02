@@ -1,25 +1,12 @@
-import { useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import {ProjectTableCell} from './ProjectTableCell';
 import {ProjectTableHeaderCell} from './ProjectTableHeaderCell';
 import { useProjectContext } from '@/contexts/ProjectContext';
 import styles from '@v7-product-interview-task/styles/ProjectTable.module.css'
 
-// Custom hook to handle project channel (you'll need to implement the actual WebSocket logic)
-const useProjectChannel = (projectId: string) => {
-  useEffect(() => {
-    // Implement WebSocket connection logic here
-    return () => {
-      // Cleanup WebSocket connection
-    };
-  }, [projectId]);
-};
 
 export const ProjectTable = () => {
   const {workspaceId, projectId} = useParams() as { workspaceId: string; projectId: string };
-  
-  useProjectChannel(projectId);
-
   const {entities, project} = useProjectContext()
 
   return (

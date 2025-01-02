@@ -8,7 +8,7 @@ This readme contains information on how to run the React template, and some cont
 
 ### Set your API Key
 
-Create a Go API key at https://go.v7labs.com/:yourWorkspaceId/settings/api-keys. Add this API key to `/packages/react/.env`.
+Create a Go API key at https://go.v7labs.com/:yourWorkspaceId/settings/api-keys. Add this API key to `/packages/react/.env` under `VITE_API_KEY`.
 
 ### Run the template app
 
