@@ -34,7 +34,7 @@ const text = computed(() => {
     @click="onClickCell"
   >
     <span v-if="text">{{ text }}</span>
-    <span v-else class="empty-cell">(empty)</span>
+    <span v-else class="emptyCell">(empty)</span>
   </td>
 </template>
 

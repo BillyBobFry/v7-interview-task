@@ -2,7 +2,7 @@ import { Entity } from '@v7-product-interview-task/api';
 import React, { useRef } from 'react';
 import styles from '@v7-product-interview-task/styles/ProjectTableCell.module.css'
 
-interface TableCellProps {
+type TableCellProps = {
   propertyIndex: number;
   entityIndex: number;
   field: Entity['fields'][string];
@@ -30,7 +30,7 @@ export const ProjectTableCell: React.FC<TableCellProps> = ({ propertyIndex, enti
       {text ? (
         <span>{text}</span>
       ) : (
-        <span className="empty-cell">(empty)</span>
+        <span className="emptyCell">(empty)</span>
       )}
     </td>
   );

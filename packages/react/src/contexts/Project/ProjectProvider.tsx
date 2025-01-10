@@ -1,15 +1,8 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Entity, getEntities, getProject, Project } from '@v7-product-interview-task/api';
 import { useParams } from 'react-router';
+import { ProjectContext } from './useProjectContext';
 
-type ProjectContextType = {
-  project: Project | null;
-  entities: Entity[];
-  workspaceId: string;
-  projectId: string;
-};
-
-const ProjectContext = createContext<ProjectContextType | null>(null);
 
 export const ProjectProvider: React.FC<{
   children: React.ReactNode;
@@ -64,10 +57,3 @@ export const ProjectProvider: React.FC<{
   );
 };
 
-export const useProjectContext = () => {
-  const context = useContext(ProjectContext);
-  if (!context) {
-    throw new Error('useProject must be used within a ProjectProvider');
-  }
-  return context;
-};

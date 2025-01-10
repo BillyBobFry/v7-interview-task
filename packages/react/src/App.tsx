@@ -3,7 +3,7 @@ import { BrowserRouter, Route, Routes } from "react-router";
 import { ProjectTable } from "./components/ProjectTable";
 import { EntityView } from "./components/EntityView";
 import { FallbackPage } from "./components/FallbackPage";
-import { ProjectProvider } from "./contexts/ProjectContext";
+import { ProjectProvider } from "./contexts/Project/ProjectProvider";
 
 function App() {
   console.log(import.meta.env);

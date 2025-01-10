@@ -1,7 +1,7 @@
 import { Link, useParams } from 'react-router-dom';
 import {ProjectTableCell} from './ProjectTableCell';
 import {ProjectTableHeaderCell} from './ProjectTableHeaderCell';
-import { useProjectContext } from '@/contexts/ProjectContext';
+import { useProjectContext } from '@/contexts/Project/useProjectContext';
 import styles from '@v7-product-interview-task/styles/ProjectTable.module.css'
 
 

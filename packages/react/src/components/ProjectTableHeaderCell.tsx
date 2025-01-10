@@ -10,14 +10,14 @@ export const ProjectTableHeaderCell = ({
 }) => {
   return (
     <th
-      className={styles['header-cell']}
+      className={styles['headerCell']}
       role="gridcell"
       aria-rowindex={1}
       aria-colindex={columnIndex + 1}
       tabIndex={0}
     >
       {property.name}
-      <span className={styles['property-type']}>({property.type})</span>
+      <span className={styles['propertyType']}>({property.type})</span>
     </th>
   );
 };

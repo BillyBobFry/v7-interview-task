@@ -62,5 +62,8 @@ See the readmes in the Vue and React packages for information on how to get star
 ### Submission Guidelines
 
 - Please push your submission to a new branch on this repo
-- Use code comments to communicate any information you feel would be useful when reviewing
+- Use code comments to communicate any information you feel would be useful when reviewing, e.g:
+  - Things you might do differently if given more time
+  - Where you focused your effort
+  - Any assumptions you made
 - Please inform your contact within our talent team when you have pushed your branch

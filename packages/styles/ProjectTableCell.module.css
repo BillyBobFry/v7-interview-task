@@ -5,7 +5,7 @@
   overflow: hidden;
 }
 
-.empty-cell {
+.emptyCell {
   opacity: 0.75;
   font-style: italic;
 }
