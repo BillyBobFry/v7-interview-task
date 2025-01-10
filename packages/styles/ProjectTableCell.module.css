@@ -1,0 +1,11 @@
+.cell {
+  padding: 0.5rem;
+  min-width: 300px;
+  max-width: 500px;
+  overflow: hidden;
+}
+
+.emptyCell {
+  opacity: 0.75;
+  font-style: italic;
+}

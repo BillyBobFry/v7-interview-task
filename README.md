@@ -1,12 +1,18 @@
 # V7 Product Interview Task
 
-Thank you for taking the time to do this task! This repo contains a very basic reproduction of the Go table view and an empty page for the entity view.
+Thank you for taking the time to do this task! This repo uses [NPM workspaces](https://docs.npmjs.com/cli/v11/using-npm/workspaces) to provide both Vue and React templates with:
+
+- A very basic reproduction of the Go table view
+- An empty page for the entity view.
+
+Choose the template you're most comfortable with - we evaluate based on the quality of your implementation, not which framework you use.
+
+> _Note: While you're free to use a different framework altogether, we recommend using one of the provided templates. We don't give marks for reimplementing the template in a different framework._
 
 - The styling is intentionally simple, and should not be used as an indication of how
   we expect you to style your submission.
 - Feel free to use any styling solution; Tailwind, SASS, vanilla CSS - or anything else that you feel will showcase your ability to create a delightful UI!
 - Given the time constraints, we don't expect high test coverage, but small sample tests are appreciated.
-- We built this app with Vue, but you won't be judged on your mastery of Vue - we understand that you might not have prior experience with it. Mastery of web standards and Javascript are more important.
 
 ## What we expect
 
@@ -25,38 +31,39 @@ most impactful. We value polished features over breadth of scope.
 
 If you have any questions, then please email your contact within our talent team.
 
-## Recommended IDE Setup
+## Repository Structure
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+This repository uses NPM workspaces to provide both Vue and React starter templates. You can choose either template for your submission based on your preferences and experience.
 
-### Type Support for `.vue` Imports in TS
+### Understanding npm Workspaces
 
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) to make the TypeScript language service aware of `.vue` types.
+The project is structured as follows:
 
-## Customize configuration
-
-See [Vite Configuration Reference](https://vitejs.dev/config/).
-
-## Project Setup
-
-```sh
-npm install
+```
+project-root/
+-- package.json
+-- packages/
+---- vue/ # Vue starter template
+---- react/ # React starter template
+---- styles/ # Stylesheets used in both templates
+---- api/ # Functions to fetch data from the backend, and API type definitions
 ```
 
-### Compile and Hot-Reload for Development
+Each template in the `packages` directory is a separate application with its own dependencies, but they share the root-level configuration. This setup allows you to:
 
-```sh
-npm run dev
-```
+- Install all dependencies for both templates with a single `npm install` at the root
+- Run commands for specific workspaces using the `-w` or `--workspace` flag
+- Choose which template to build upon without dealing with unused code
 
-### Type-Check, Compile and Minify for Production
+### Getting Started
 
-```sh
-npm run build
-```
+See the readmes in the Vue and React packages for information on how to get started.
 
-### Run Unit Tests with [Vitest](https://vitest.dev/)
+### Submission Guidelines
 
-```sh
-npm run test:unit
-```
+- Please push your submission to a new branch on this repo
+- Use code comments to communicate any information you feel would be useful when reviewing, e.g:
+  - Things you might do differently if given more time
+  - Where you focused your effort
+  - Any assumptions you made
+- Please inform your contact within our talent team when you have pushed your branch
