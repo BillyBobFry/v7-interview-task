@@ -27,11 +27,13 @@ export const ProjectTableCell: React.FC<TableCellProps> = ({ propertyIndex, enti
       tabIndex={0}
       onClick={onClickCell}
     >
-      {text ? (
-        <span>{text}</span>
-      ) : (
-        <span className="emptyCell">(empty)</span>
-      )}
+      {
+        text ? (
+          <span>{text}</span>
+        ) : (
+          <span className={styles.emptyCell}>(empty)</span>
+        )
+      }
     </td>
   );
 };

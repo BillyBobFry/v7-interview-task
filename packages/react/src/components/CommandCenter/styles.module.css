@@ -1,0 +1,162 @@
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000; /* 
+      NOTE: We should ideally have constants for CSS design system.
+      I'm skipping it for the sake of time.
+    */
+    backdrop-filter: blur(4px);
+  }
+  
+  .modal {
+    background-color: rgba(23, 23, 23, 0.95);
+    backdrop-filter: blur(8px);
+    padding: 1.5rem;
+    border-radius: 8px;
+    width: 90%;
+    max-width: 500px;
+    box-shadow: 0 0px 9px 2px rgb(0 0 0 / 40%);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .inputContainer {
+    width: 100%;
+    padding: 1.25rem 1.25rem 0.75rem 1.25rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    margin-bottom: 1rem;
+    font-size: 1rem;
+    outline: none;
+    transition: box-shadow 0.2s ease-in-out;
+    background-color: rgba(255, 255, 255, 0.05);
+    color: rgba(255, 255, 255, 0.9);
+
+    &.focused {
+      box-shadow: 0 0 10px 4px rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+    
+    .input {
+      background-color: transparent;
+      border: none;
+      width: 100%;
+      font-size: 1rem;
+      outline: none;
+      color: rgba(255, 255, 255, 0.9);
+
+      &::placeholder {
+        color: rgba(255, 255, 255, 0.4);
+      }
+    }
+
+    .subtextContainer {
+      display: flex;
+      font-size: 0.65rem;
+      color: rgba(255, 255, 255, 0.4);
+      margin-top: 1rem;
+    }
+
+    .subtext {
+      margin: 0;
+    }
+}
+
+.keyboardKey {
+    background-color: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 5px;
+    padding: 2px 4px;
+    font-size: 0.6rem;
+    font-family: monospace;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+    color: rgba(255, 255, 255, 0.8);
+  }
+
+
+.commandList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.commandList li {
+  padding: 0.75rem 1rem;
+  cursor: pointer;
+  border-radius: 6px;
+  color: rgba(255, 255, 255, 0.9);
+  transition: all 0.2s ease;
+  margin-bottom: 2px;
+
+  &:focus {
+    outline: none;  
+  }
+}
+
+.commandList li:hover,
+.highlighted {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.commandListContainer {
+  outline: none;
+
+  &:focus {
+    outline: none;
+  }
+}
+
+
+@media (prefers-color-scheme: light) {
+  .overlay {
+    background-color: rgba(0, 0, 0, 0.2);
+  }
+  .modal {
+    background-color: rgba(255, 255, 255, 0.95);
+    border-color: rgba(0, 0, 0, 0.1);
+  }
+
+  .inputContainer.inputContainer {
+    border-color: rgba(0, 0, 0, 0.1);
+    background-color: rgba(0, 0, 0, 0.02);
+    color: rgba(0, 0, 0, 0.9);
+
+    &.focused {
+      box-shadow: 0 0 10px 4px rgba(0, 0, 0, 0.05);
+      border-color: rgba(0, 0, 0, 0.2);
+    }
+
+    .input {
+      color: rgba(0, 0, 0, 0.9);
+
+      &::placeholder {
+        color: rgba(0, 0, 0, 0.4);
+      }
+    }
+
+    .subtextContainer {
+      color: rgba(0, 0, 0, 0.4);
+    }
+  }
+
+  .keyboardKey {
+    background-color: rgba(0, 0, 0, 0.05);
+    border-color: rgba(0, 0, 0, 0.1);
+    color: rgba(0, 0, 0, 0.8);
+  }
+
+  .commandList li {
+    color: rgba(0, 0, 0, 0.9);
+  }
+
+  .commandList li:hover,
+  .highlighted {
+    background-color: rgba(0, 0, 0, 0.05);
+  }
+}

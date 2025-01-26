@@ -1,7 +1,8 @@
 import { Entity, Project } from "@v7-product-interview-task/api";
 import { createContext, useContext } from "react";
+import { useParams } from "react-router-dom";
 
-type ProjectContextType = {
+export type ProjectContextType = {
   project: Project | null;
   entities: Entity[];
   workspaceId: string;
@@ -9,7 +10,6 @@ type ProjectContextType = {
 };
 
 export const ProjectContext = createContext<ProjectContextType | null>(null);
-
 
 export const useProjectContext = () => {
   const context = useContext(ProjectContext);
