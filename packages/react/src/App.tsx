@@ -4,7 +4,7 @@ import { useKeybinding } from "./hooks/keyboardEventHandler";
 import React, { memo } from "react";
 import { createCommandCenter } from "./components/CommandCenter";
 import { AppRoutes, type AppRoutesProps } from "./routes";
-import { defaultSuggestions, InputAction, Suggestion } from "./constants/commandTypes";
+import { defaultSuggestions, InputAction, Suggestion } from "./actions/commandTypes";
 import { ProjectContextType } from "./contexts/Project/useProjectContext";
 
 const AppComponent = React.memo(function AppComponent({

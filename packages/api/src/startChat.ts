@@ -8,7 +8,7 @@ export const startChat = async ({
     apiKey: string;
 }) => {
     const res = await fetch(
-        `${API_BASE_URL}/workspaces/${workspaceId}/spaces`,
+        `${API_BASE_URL}/workspaces/${workspaceId}/ask_go`,
         {
             method: "POST",
             headers: {
@@ -16,8 +16,7 @@ export const startChat = async ({
                 "X-API-KEY": apiKey,
             },
             body: JSON.stringify({
-                name: `New Chat ${Date.now()}`,
-                type: 'chat'
+                workspaceId,
             }),
         },
     );

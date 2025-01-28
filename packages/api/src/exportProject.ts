@@ -1,21 +1,19 @@
 import { API_BASE_URL } from "./constants";
 import type { Project } from "./types";
 
-// NOTE: These are just sample requests. We would ideally be importing types from the API and making better use of them.
-
-export const createProject = async ({
+export const exportProject = async ({
     apiKey,
     workspaceId,
+    projectId,
     name
 }: {
     workspaceId: string;
     apiKey: string;
+    projectId: string;
     name: string;
 }) => {
-    // TODO: We should ideally have an abstraction for creating these requests.
-
     const res = await fetch(
-        `${API_BASE_URL}/workspaces/${workspaceId}/projects`,
+        `${API_BASE_URL}/workspaces/${workspaceId}/projects/${projectId}/exports`,
         {
             method: "POST",
             headers: {
@@ -24,6 +22,7 @@ export const createProject = async ({
             },
             body: JSON.stringify({
                 name,
+                format: 'csv' // sticking to default for now.
             }),
         },
     );

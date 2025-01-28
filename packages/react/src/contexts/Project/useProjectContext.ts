@@ -1,6 +1,5 @@
 import { Entity, Project } from "@v7-product-interview-task/api";
 import { createContext, useContext } from "react";
-import { useParams } from "react-router-dom";
 
 export type ProjectContextType = {
   project: Project | null;
