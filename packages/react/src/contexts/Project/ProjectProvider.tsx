@@ -3,6 +3,9 @@ import { Entity, getEntities, getProject, Project } from '@v7-product-interview-
 import { useParams } from 'react-router';
 import { ProjectContext } from './useProjectContext';
 
+/**
+ * We could store the project and entities in a global state, making it easier to access from anywhere, without being in react boundaries.
+ */
 
 export const ProjectProvider: React.FC<{
   children: React.ReactNode;
@@ -10,15 +13,15 @@ export const ProjectProvider: React.FC<{
   const [project, setProject] = useState<Project | null>(null);
   const [entities, setEntities] = useState<Entity[]>([]);
 
-  const {workspaceId, projectId} = useParams() as { workspaceId: string; projectId: string };
-  
+  const { workspaceId, projectId } = useParams() as { workspaceId: string; projectId: string };
+
   useEffect(() => {
     const load = async () => {
       const apiKey = import.meta.env.VITE_API_KEY
       if (!apiKey) {
         throw new Error('VITE_API_KEY env variable is not set');
       }
-  
+
       try {
         const [projectData, entityData] = await Promise.all([
           getProject({
@@ -32,7 +35,7 @@ export const ProjectProvider: React.FC<{
             workspaceId,
           }),
         ]);
-  
+
         setProject(projectData);
         setEntities(entityData);
       } catch {
