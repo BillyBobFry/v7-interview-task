@@ -6,7 +6,7 @@ import { useEffect, useRef } from "react";
 import { Input } from "./Input";
 import { useKeybinding } from "@/hooks/keyboardEventHandler";
 import { KEY_BINDINGS } from "@/constants/keybindings";
-import { Suggestion } from "@/constants/commandTypes";
+import { Suggestion } from "@/actions/commandTypes";
 import { ProjectContextType, useProjectContext } from "@/contexts/Project/useProjectContext";
 import { InputStore } from "./InputStore";
 import { CommandCenterStore } from "./CommandCenterStore";

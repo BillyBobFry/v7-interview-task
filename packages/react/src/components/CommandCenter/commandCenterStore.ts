@@ -1,7 +1,7 @@
 import { IReactionDisposer, makeAutoObservable, reaction } from "mobx";
 import { InputStore } from "./InputStore";
 import { SuggestionsStore } from "./SuggestionsStore";
-import { Suggestion } from "@/constants/commandTypes";
+import { Suggestion } from "@/actions/commandTypes";
 import { ProjectContextType } from "@/contexts/Project/useProjectContext";
 import { debounce } from "lodash";
 

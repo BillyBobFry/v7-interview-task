@@ -1,6 +1,6 @@
 import { memo } from 'react';
 import styles from './styles.module.css';
-import { Suggestion } from '@/constants/commandTypes';
+import { Suggestion } from '@/actions/commandTypes';
 
 type CommandCenterSuggestionsProps = {
   suggestions: Suggestion[];

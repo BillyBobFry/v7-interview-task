@@ -1,6 +1,6 @@
 import { IReactionDisposer, makeAutoObservable, reaction } from "mobx";
 import { isEqual } from "lodash";
-import { Suggestion } from "@/constants/commandTypes";
+import { Suggestion } from "@/actions/commandTypes";
 
 
 export class SuggestionsStore {
